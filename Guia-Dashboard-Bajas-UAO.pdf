@@ -1,0 +1,361 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Length 5184 >>
+stream
+0.886 0.000 0.102 rg
+56 799.89 36 16 re f
+BT /F2 9 Tf 1 1 1 rg
+1 0 0 1 63 803.89 Tm (UAO) Tj ET
+BT /F1 8 Tf 0.420 0.460 0.530 rg 1 0 0 1 100 803.89 Tm (Guia de construccion del Dashboard - UAO) Tj ET
+0.860 0.890 0.940 RG 0.8 w 56 793.89 m 539.28 793.89 l S
+BT 0.886 0.000 0.102 rg /F2 24 Tf 1 0 0 1 56 695.89 Tm (Guia explicativa paso a paso) Tj ET
+BT 0.110 0.140 0.200 rg /F2 15 Tf 1 0 0 1 56 673.89 Tm (Construccion del Dashboard Ejecutivo de Bajas TI) Tj ET
+BT 0.420 0.460 0.530 rg /F1 11 Tf 1 0 0 1 56 651.89 Tm (Universidad Autonoma de Occidente - Unidad de Servicio al Usuario) Tj ET
+BT 0.110 0.140 0.200 rg /F1 11 Tf 1 0 0 1 56 617.39 Tm (Este documento describe, paso a paso, como se construyo la aplicacion web \(Dashboard) Tj ET
+BT 0.110 0.140 0.200 rg /F1 11 Tf 1 0 0 1 56 602.89 Tm (Ejecutivo\) a partir de las solicitudes de baja de activos \(DITI\), explica el script de) Tj ET
+BT 0.110 0.140 0.200 rg /F1 11 Tf 1 0 0 1 56 588.39 Tm (Python empleado para transformar los datos y detalla las herramientas de terceros) Tj ET
+BT 0.110 0.140 0.200 rg /F1 11 Tf 1 0 0 1 56 573.89 Tm (utilizadas.) Tj ET
+BT 0.110 0.140 0.200 rg /F2 12.5 Tf 1 0 0 1 56 537.89 Tm (Contenido) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 520.39 Tm (-  1. Vision general del flujo de trabajo) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 503.89 Tm (-  2. Paso 1 - Lectura y comprension de los datos de origen) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 487.39 Tm (-  3. Paso 2 - Normalizacion con Python \(script explicado\)) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 470.89 Tm (-  4. Paso 3 - Diseno de la aplicacion HTML \(KPIs, graficos, filtros\)) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 454.39 Tm (-  5. Paso 4 - Validacion de los datos) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 437.89 Tm (-  6. Paso 5 - Publicacion en GitHub y GitHub Pages) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 421.39 Tm (-  7. Herramientas de terceros utilizadas) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 404.89 Tm (-  8. Resumen de resultados) Tj ET
+BT 0.886 0.000 0.102 rg /F2 17 Tf 1 0 0 1 56 374.89 Tm (1. Vision general del flujo) Tj ET
+0.886 0.000 0.102 RG 1.4 w 56 370.89 m 206 370.89 l S
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 350.39 Tm (El objetivo fue convertir un listado tabular de bajas de equipos de computo en un tablero) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 335.89 Tm (ejecutivo interactivo, autocontenido en un unico archivo HTML. El flujo siguio cinco etapas:) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 318.39 Tm (-  Datos de origen: tabla con columnas Archivo de Origen, Fecha, Consecutivo \(DITI\),) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 303.89 Tm (   Cantidad, Descripcion del elemento, Serie No. y No. inventario.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 287.39 Tm (-  Normalizacion: un script de Python clasifica cada fila por categoria y marca, convierte) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 272.89 Tm (   las fechas y genera un arreglo de datos listo para el navegador.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 256.39 Tm (-  Interfaz: HTML + CSS + JavaScript \(Chart.js\) con KPIs, 5 graficos, filtros y modo) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 241.89 Tm (   claro/oscuro, todo embebido en un solo archivo.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 225.39 Tm (-  Validacion: se verifican totales \(lineas, unidades, documentos\) y la sintaxis.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 208.89 Tm (-  Publicacion: el archivo se sube a un repositorio GitHub y se expone con Pages.) Tj ET
+BT 0.886 0.000 0.102 rg /F2 17 Tf 1 0 0 1 56 178.89 Tm (2. Paso 1 - Lectura de los datos de origen) Tj ET
+0.886 0.000 0.102 RG 1.4 w 56 174.89 m 206 174.89 l S
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 154.39 Tm (La fuente final fue un archivo CSV exportado desde Excel. Cada fila representa un activo) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 139.89 Tm (individual dado de baja. Un ejemplo de las primeras lineas:) Tj ET
+0.960 0.970 0.990 rg 56 81.69 483.28 55.20 re f
+0.860 0.890 0.940 RG 0.6 w 56 81.69 483.28 55.20 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 122.69 Tm (Archivo de Origen,Fecha,Consecutivo,Cantidad,Descripcion del elemento,Serie No.,No. inventario) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 111.89 Tm (Bajas 2025.pdf,16/1/2025,DITI-8.6-01,1,TELEFONO IP GAMA MEDIA 1608,10WZ25052647,98975) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 101.09 Tm (Bajas 2025.pdf,20/1/2025,DITI-8.6-03,1,Teclado Logitech EX100,820-001810,41940) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 90.29 Tm (Bajas 2025.pdf,21/4/2025,DITI-4.6-23,1,"Imac 21""",QP05103PDB6,100033) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 63.19 Tm (Observaciones clave que condicionaron el procesamiento:) Tj ET
+0.860 0.890 0.940 RG 0.8 w 56 42 m 539.28 42 l S
+BT 0.420 0.460 0.530 rg /F1 8 Tf 1 0 0 1 56 30 Tm (Universidad Autonoma de Occidente - Dashboard de Bajas TI) Tj ET
+BT 0.420 0.460 0.530 rg /F1 8 Tf 1 0 0 1 479.28 30 Tm (Pagina 1 de 5) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Length 6537 >>
+stream
+0.886 0.000 0.102 rg
+56 799.89 36 16 re f
+BT /F2 9 Tf 1 1 1 rg
+1 0 0 1 63 803.89 Tm (UAO) Tj ET
+BT /F1 8 Tf 0.420 0.460 0.530 rg 1 0 0 1 100 803.89 Tm (Guia de construccion del Dashboard - UAO) Tj ET
+0.860 0.890 0.940 RG 0.8 w 56 793.89 m 539.28 793.89 l S
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 771.39 Tm (-  Las descripciones con comas van entrecomilladas \(CSV estandar\).) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 754.89 Tm (-  La columna Cantidad puede ser mayor que 1 \(p. ej. lotes de mouse\).) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 738.39 Tm (-  Algunos campos de serie o inventario vienen vacios.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 721.89 Tm (-  Las fechas estan en formato d/m/aaaa \(debe convertirse a aaaa-mm-dd\).) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 705.39 Tm (-  Hay dos archivos de origen: Bajas 2025.pdf y bajas 2026.pdf.) Tj ET
+BT 0.886 0.000 0.102 rg /F2 17 Tf 1 0 0 1 56 675.39 Tm (3. Paso 2 - Normalizacion con Python) Tj ET
+0.886 0.000 0.102 RG 1.4 w 56 671.39 m 206 671.39 l S
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 650.89 Tm (Se escribio un script en Python \(solo libreria estandar: modulos csv y json\) que realiza) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 636.39 Tm (cuatro tareas: \(a\) leer el CSV, \(b\) convertir la fecha, \(c\) clasificar cada fila en una) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 621.89 Tm (categoria y una marca mediante palabras clave, y \(d\) exportar un arreglo JavaScript \(const) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 607.39 Tm (RAW = [...]\) que el dashboard consume directamente.) Tj ET
+BT 0.110 0.140 0.200 rg /F2 12.5 Tf 1 0 0 1 56 581.39 Tm (3.1 Lectura del CSV) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 563.89 Tm (Se usa csv.DictReader para acceder a cada columna por su nombre de encabezado:) Tj ET
+0.960 0.970 0.990 rg 56 473.29 483.28 87.60 re f
+0.860 0.890 0.940 RG 0.6 w 56 473.29 483.28 87.60 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 546.69 Tm (import csv, json) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 535.89 Tm () Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 525.09 Tm (rows = []) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 514.29 Tm (with open\('bajas.csv', encoding='utf-8'\) as f:) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 503.49 Tm (    r = csv.DictReader\(f\)          # lee usando la fila de encabezados) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 492.69 Tm (    for row in r:) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 481.89 Tm (        rows.append\(row\)           # cada 'row' es un diccionario) Tj ET
+BT 0.110 0.140 0.200 rg /F2 12.5 Tf 1 0 0 1 56 446.29 Tm (3.2 Conversion de la fecha) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 428.79 Tm (La fecha d/m/aaaa se normaliza a formato ISO aaaa-mm-dd, que permite ordenar y agrupar por) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 414.29 Tm (mes de forma fiable:) Tj ET
+0.960 0.970 0.990 rg 56 345.29 483.28 66.00 re f
+0.860 0.890 0.940 RG 0.6 w 56 345.29 483.28 66.00 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 397.09 Tm (def parse_date\(d\):) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 386.29 Tm (    dd, mm, yy = d.strip\(\).split\('/'\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 375.49 Tm (    return f'{int\(yy\):04d}-{int\(mm\):02d}-{int\(dd\):02d}') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 364.69 Tm () Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 353.89 Tm (# Ejemplo:  '16/1/2025'  ->  '2025-01-16') Tj ET
+BT 0.110 0.140 0.200 rg /F2 12.5 Tf 1 0 0 1 56 318.29 Tm (3.3 Clasificacion por categoria) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 300.79 Tm (Como la columna 'Descripcion' es texto libre, se definio una funcion que asigna una) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 286.29 Tm (categoria normalizada buscando palabras clave en minusculas. El orden de las reglas importa) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 271.79 Tm (\(se evalua celular y portatil antes que CPU para evitar choques\):) Tj ET
+0.960 0.970 0.990 rg 56 62.39 483.28 206.40 re f
+0.860 0.890 0.940 RG 0.6 w 56 62.39 483.28 206.40 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 254.59 Tm (def categorize\(desc\):) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 243.79 Tm (    d = desc.lower\(\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 232.99 Tm (    if any\(k in d for k in ['celular','smartphone','galaxy',) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 222.19 Tm (                            'alcatel','nokia','moto e','motorola']\):) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 211.39 Tm (        return 'Celular') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 200.59 Tm (    if \('portatil' in d or 'macbook' in d or 'notebook' in d) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 189.79 Tm (            or 'latitude' in d\):) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 178.99 Tm (        return 'Portatil') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 168.19 Tm (    if any\(k in d for k in ['cpu','computador','optiplex','imac',) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 157.39 Tm (                            'macpro','desktop','todo en uno','aio']\):) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 146.59 Tm (        return 'CPU/Computador') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 135.79 Tm (    if 'monitor' in d or 'pantalla' in d or 'display' in d:) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 124.99 Tm (        return 'Monitor') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 114.19 Tm (    if 'teclado' in d or 'keyboard' in d:   return 'Teclado') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 103.39 Tm (    if 'mouse' in d:                         return 'Mouse') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 92.59 Tm (    if 'diadema' in d or 'parlante' in d:    return 'Diadema/Audio') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 81.79 Tm (    if 'telefono' in d or 'avaya' in d:      return 'Telefono') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 70.99 Tm (    if 'ipad' in d or 'tablet' in d or 'wacom' in d: return 'Tablet') Tj ET
+0.860 0.890 0.940 RG 0.8 w 56 42 m 539.28 42 l S
+BT 0.420 0.460 0.530 rg /F1 8 Tf 1 0 0 1 56 30 Tm (Universidad Autonoma de Occidente - Dashboard de Bajas TI) Tj ET
+BT 0.420 0.460 0.530 rg /F1 8 Tf 1 0 0 1 479.28 30 Tm (Pagina 2 de 5) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Length 6821 >>
+stream
+0.886 0.000 0.102 rg
+56 799.89 36 16 re f
+BT /F2 9 Tf 1 1 1 rg
+1 0 0 1 63 803.89 Tm (UAO) Tj ET
+BT /F1 8 Tf 0.420 0.460 0.530 rg 1 0 0 1 100 803.89 Tm (Guia de construccion del Dashboard - UAO) Tj ET
+0.860 0.890 0.940 RG 0.8 w 56 793.89 m 539.28 793.89 l S
+0.960 0.970 0.990 rg 56 741.49 483.28 44.40 re f
+0.860 0.890 0.940 RG 0.6 w 56 741.49 483.28 44.40 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 771.69 Tm (    if any\(k in d for k in ['cisco','switch','enrutador','servidor']\):) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 760.89 Tm (        return 'Red/Networking') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 750.09 Tm (    return 'Otros'                           # categoria por defecto) Tj ET
+BT 0.110 0.140 0.200 rg /F2 12.5 Tf 1 0 0 1 56 714.49 Tm (3.4 Deteccion de la marca) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 696.99 Tm (De forma analoga, una lista de pares \(palabra_clave, marca\) permite inferir el fabricante.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 682.49 Tm (El primer patron que coincide gana; si ninguno coincide, la marca es 'Generico':) Tj ET
+0.960 0.970 0.990 rg 56 537.89 483.28 141.60 re f
+0.860 0.890 0.940 RG 0.6 w 56 537.89 483.28 141.60 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 665.29 Tm (def brand\(desc\):) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 654.49 Tm (    d = desc.lower\(\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 643.69 Tm (    pairs = [\('dell','Dell'\), \('optiplex','Dell'\), \('imac','Apple'\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 632.89 Tm (             \('macbook','Apple'\), \('hp ','HP'\), \('avaya','Avaya'\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 622.09 Tm (             \('yealink','Yealink'\), \('samsung','Samsung'\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 611.29 Tm (             \('cisco','Cisco'\), \('sennheiser','Sennheiser'\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 600.49 Tm (             \('plantronics','Plantronics'\), \('logitech','Logitech'\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 589.69 Tm (             \('xkim','Xkim'\), \('lenovo','Lenovo'\), \('lg ','LG'\)]) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 578.89 Tm (    for clave, marca in pairs:) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 568.09 Tm (        if clave in d:) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 557.29 Tm (            return marca) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 546.49 Tm (    return 'Generico') Tj ET
+BT 0.110 0.140 0.200 rg /F2 12.5 Tf 1 0 0 1 56 510.89 Tm (3.5 Exportacion del arreglo RAW) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 493.39 Tm (Finalmente se recorre cada fila, se calculan categoria y marca, se acumulan los totales de) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 478.89 Tm (control y se escribe el arreglo JavaScript que el HTML incluye tal cual:) Tj ET
+0.960 0.970 0.990 rg 56 150.69 483.28 325.20 re f
+0.860 0.890 0.940 RG 0.6 w 56 150.69 483.28 325.20 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 461.69 Tm (out = []) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 450.89 Tm (for row in rows:) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 440.09 Tm (    desc = row['Descripcion del elemento'].strip\(\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 429.29 Tm (    if not desc:            # ignora filas sin descripcion) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 418.49 Tm (        continue) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 407.69 Tm (    qty = int\(row['Cantidad'] or '1'\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 396.89 Tm (    out.append\({) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 386.09 Tm (        'src':   row['Archivo de Origen'].strip\(\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 375.29 Tm (        'doc':   row['Consecutivo'].strip\(\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 364.49 Tm (        'date':  parse_date\(row['Fecha']\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 353.69 Tm (        'qty':   qty,) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 342.89 Tm (        'cat':   categorize\(desc\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 332.09 Tm (        'brand': brand\(desc\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 321.29 Tm (        'desc':  desc,) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 310.49 Tm (        'serie': row['Serie No.'].strip\(\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 299.69 Tm (        'inv':   row['No. inventario'].strip\(\),) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 288.89 Tm (    }\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 278.09 Tm () Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 267.29 Tm (# Totales de control \(se imprimen para validar\):) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 256.49 Tm (print\('Lineas :', len\(out\)\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 245.69 Tm (print\('Unidades:', sum\(o['qty'] for o in out\)\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 234.89 Tm (print\('Docs   :', len\({o['doc'] for o in out}\)\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 224.09 Tm () Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 213.29 Tm (# Se escribe el arreglo que consumira el dashboard:) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 202.49 Tm (with open\('_raw.js','w',encoding='utf-8'\) as f:) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 191.69 Tm (    f.write\('const RAW = [\\n'\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 180.89 Tm (    for o in out:) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 170.09 Tm (        f.write\('  ' + json.dumps\(o, ensure_ascii=False\) + ',\\n'\)) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 159.29 Tm (    f.write\('];\\n'\)) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 132.19 Tm (El resultado es un objeto por activo, por ejemplo:) Tj ET
+0.960 0.970 0.990 rg 56 73.99 483.28 55.20 re f
+0.860 0.890 0.940 RG 0.6 w 56 73.99 483.28 55.20 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 114.99 Tm ({"src":"Bajas 2025.pdf","doc":"DITI-8.6-01","date":"2025-01-16",) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 104.19 Tm ( "qty":1,"cat":"Telefono","brand":"Avaya",) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 93.39 Tm ( "desc":"TELEFONO IP GAMA MEDIA 1608","serie":"10WZ25052647",) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 82.59 Tm ( "inv":"98975"}) Tj ET
+0.860 0.890 0.940 RG 0.8 w 56 42 m 539.28 42 l S
+BT 0.420 0.460 0.530 rg /F1 8 Tf 1 0 0 1 56 30 Tm (Universidad Autonoma de Occidente - Dashboard de Bajas TI) Tj ET
+BT 0.420 0.460 0.530 rg /F1 8 Tf 1 0 0 1 479.28 30 Tm (Pagina 3 de 5) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Length 5676 >>
+stream
+0.886 0.000 0.102 rg
+56 799.89 36 16 re f
+BT /F2 9 Tf 1 1 1 rg
+1 0 0 1 63 803.89 Tm (UAO) Tj ET
+BT /F1 8 Tf 0.420 0.460 0.530 rg 1 0 0 1 100 803.89 Tm (Guia de construccion del Dashboard - UAO) Tj ET
+0.860 0.890 0.940 RG 0.8 w 56 793.89 m 539.28 793.89 l S
+BT 0.886 0.000 0.102 rg /F2 17 Tf 1 0 0 1 56 757.89 Tm (4. Paso 3 - Diseno de la aplicacion HTML) Tj ET
+0.886 0.000 0.102 RG 1.4 w 56 753.89 m 206 753.89 l S
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 733.39 Tm (El dashboard es un unico archivo .html que incluye CSS y JavaScript embebidos. Solo depende) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 718.89 Tm (de una libreria externa \(Chart.js\), cargada por CDN. Sus bloques:) Tj ET
+BT 0.110 0.140 0.200 rg /F2 12.5 Tf 1 0 0 1 56 692.89 Tm (4.1 KPIs \(tarjetas superiores\)) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 675.39 Tm (Seis tarjetas calculan metricas agregadas en tiempo real: unidades dadas de baja, numero de) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 660.89 Tm (solicitudes DITI, categorias, participacion de la categoria principal, porcentaje de equipos) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 646.39 Tm (de computo y numero de marcas.) Tj ET
+BT 0.110 0.140 0.200 rg /F2 12.5 Tf 1 0 0 1 56 620.39 Tm (4.2 Graficos interactivos \(Chart.js\)) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 602.89 Tm (-  Dona: distribucion de unidades por categoria.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 586.39 Tm (-  Barras horizontales: participacion por marca \(top 10\).) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 569.89 Tm (-  Linea + barra combinadas: tendencia mensual \(unidades vs. solicitudes\).) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 553.39 Tm (-  Barras: top 8 descripciones/modelos.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 536.89 Tm (-  Barras: unidades por documento DITI.) Tj ET
+BT 0.110 0.140 0.200 rg /F2 12.5 Tf 1 0 0 1 56 511.89 Tm (4.3 Filtros avanzados) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 494.39 Tm (Listas desplegables \(archivo de origen, mes, marca, documento\), un buscador de texto y chips) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 479.89 Tm (por categoria. Cualquier cambio vuelve a calcular KPIs, graficos y tabla sin recargar la) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 465.39 Tm (pagina, mediante una funcion getFiltered\(\) que filtra el arreglo RAW y un render\(\) que) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 450.89 Tm (repinta todo.) Tj ET
+BT 0.110 0.140 0.200 rg /F2 12.5 Tf 1 0 0 1 56 424.89 Tm (4.4 Diseno y modo claro/oscuro) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 407.39 Tm (Interfaz minimalista y responsiva. Un boton alterna el atributo data-theme del body; las) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 392.89 Tm (variables CSS \(:root\) cambian la paleta y los graficos se redibujan para ajustar sus colores) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 378.39 Tm (al tema activo.) Tj ET
+BT 0.886 0.000 0.102 rg /F2 17 Tf 1 0 0 1 56 347.39 Tm (5. Paso 4 - Validacion de los datos) Tj ET
+0.886 0.000 0.102 RG 1.4 w 56 343.39 m 206 343.39 l S
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 322.89 Tm (Antes de publicar, se verificaron los totales y la sintaxis con Node.js, extrayendo el) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 308.39 Tm (arreglo RAW del HTML y comprobando que no hubiera registros incompletos:) Tj ET
+0.960 0.970 0.990 rg 56 217.79 483.28 87.60 re f
+0.860 0.890 0.940 RG 0.6 w 56 217.79 483.28 87.60 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 291.19 Tm (const fs = require\('fs'\);) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 280.39 Tm (const html = fs.readFileSync\('dashboard-bajas-uao.html','utf8'\);) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 269.59 Tm (const m = html.match\(/const RAW = \\[\([\\s\\S]*?\)\\n\\];/\);) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 258.79 Tm (const RAW = eval\('[' + m[1] + ']'\);) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 247.99 Tm (console.log\('Registros:', RAW.length\);) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 237.19 Tm (console.log\('Unidades :', RAW.reduce\(\(s,r\)=>s+r.qty,0\)\);) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 226.39 Tm (console.log\('Documentos:', new Set\(RAW.map\(r=>r.doc\)\).size\);) Tj ET
+BT 0.886 0.000 0.102 rg /F2 17 Tf 1 0 0 1 56 185.79 Tm (6. Paso 5 - Publicacion en GitHub y Pages) Tj ET
+0.886 0.000 0.102 RG 1.4 w 56 181.79 m 206 181.79 l S
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 161.29 Tm (El archivo se versiono con Git y se subio a un repositorio de GitHub. Los comandos) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 146.79 Tm (esenciales fueron:) Tj ET
+0.960 0.970 0.990 rg 56 88.59 483.28 55.20 re f
+0.860 0.890 0.940 RG 0.6 w 56 88.59 483.28 55.20 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 129.59 Tm (git init) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 118.79 Tm (git add dashboard-bajas-uao.html README.md bajas.csv) Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 107.99 Tm (git commit -m 'Dashboard Ejecutivo de Bajas TI') Tj ET
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 97.19 Tm (git push -u origin main) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 70.09 Tm (Para exponer el dashboard como sitio web \(GitHub Pages\) se activa, en el repositorio, la) Tj ET
+0.860 0.890 0.940 RG 0.8 w 56 42 m 539.28 42 l S
+BT 0.420 0.460 0.530 rg /F1 8 Tf 1 0 0 1 56 30 Tm (Universidad Autonoma de Occidente - Dashboard de Bajas TI) Tj ET
+BT 0.420 0.460 0.530 rg /F1 8 Tf 1 0 0 1 479.28 30 Tm (Pagina 4 de 5) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Length 4073 >>
+stream
+0.886 0.000 0.102 rg
+56 799.89 36 16 re f
+BT /F2 9 Tf 1 1 1 rg
+1 0 0 1 63 803.89 Tm (UAO) Tj ET
+BT /F1 8 Tf 0.420 0.460 0.530 rg 1 0 0 1 100 803.89 Tm (Guia de construccion del Dashboard - UAO) Tj ET
+0.860 0.890 0.940 RG 0.8 w 56 793.89 m 539.28 793.89 l S
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 771.39 Tm (opcion Settings > Pages, eligiendo como fuente la rama main y la carpeta raiz. El dashboard) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 756.89 Tm (queda accesible en una URL del tipo:) Tj ET
+0.960 0.970 0.990 rg 56 731.09 483.28 22.80 re f
+0.860 0.890 0.940 RG 0.6 w 56 731.09 483.28 22.80 re S
+BT 0.120 0.160 0.240 rg /F3 8.2 Tf 1 0 0 1 62 739.69 Tm (https://<usuario>.github.io/<repositorio>/dashboard-bajas-uao.html) Tj ET
+BT 0.886 0.000 0.102 rg /F2 17 Tf 1 0 0 1 56 699.09 Tm (7. Herramientas de terceros utilizadas) Tj ET
+0.886 0.000 0.102 RG 1.4 w 56 695.09 m 206 695.09 l S
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 674.59 Tm (El proyecto se apoya en muy pocas dependencias externas; la mayor parte usa tecnologias) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 660.09 Tm (estandar:) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 642.59 Tm (-  Chart.js \(v4, via CDN jsdelivr\): unica libreria de terceros en la aplicacion; renderiza) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 628.09 Tm (   los cinco graficos interactivos.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 611.59 Tm (-  Python 3 \(libreria estandar: modulos csv y json\): normalizacion de datos. NO se usaron) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 597.09 Tm (   librerias de terceros de Python \(ni pandas ni openpyxl\).) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 580.59 Tm (-  Node.js \(incorporado en el entorno\): solo para validar totales y sintaxis.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 564.09 Tm (-  Git y GitHub: control de versiones, alojamiento y publicacion con Pages.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 547.59 Tm (-  Para ESTE PDF: generador propio escrito en Python puro \(libreria estandar\), sin pandoc,) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 533.09 Tm (   wkhtmltopdf, reportlab ni fpdf; se escribe directamente la estructura del archivo PDF) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 518.59 Tm (   1.4.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 502.09 Tm (Tecnologias base del dashboard \(sin instalacion\): HTML5, CSS3 \(variables, grid, flexbox\) y) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 56 487.59 Tm (JavaScript \(ES6\).) Tj ET
+BT 0.886 0.000 0.102 rg /F2 17 Tf 1 0 0 1 56 456.59 Tm (8. Resumen de resultados) Tj ET
+0.886 0.000 0.102 RG 1.4 w 56 452.59 m 206 452.59 l S
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 432.09 Tm (-  935 lineas de activo procesadas.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 415.59 Tm (-  1.338 unidades totales dadas de baja.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 399.09 Tm (-  106 solicitudes \(documentos DITI\).) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 382.59 Tm (-  11 categorias y 41 marcas detectadas automaticamente.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 366.09 Tm (-  2 archivos de origen: Bajas 2025.pdf y bajas 2026.pdf.) Tj ET
+BT 0.110 0.140 0.200 rg /F1 10.5 Tf 1 0 0 1 66 349.59 Tm (-  Periodo cubierto: enero 2025 a octubre 2026.) Tj ET
+BT 0.420 0.460 0.530 rg /F1 10.5 Tf 1 0 0 1 56 325.09 Tm (El dashboard resultante es portatil \(un solo archivo\), no requiere servidor y funciona en) Tj ET
+BT 0.420 0.460 0.530 rg /F1 10.5 Tf 1 0 0 1 56 310.59 Tm (cualquier navegador moderno. Toda la logica de agregacion ocurre en el navegador a partir) Tj ET
+BT 0.420 0.460 0.530 rg /F1 10.5 Tf 1 0 0 1 56 296.09 Tm (del arreglo RAW generado por el script de Python.) Tj ET
+0.860 0.890 0.940 RG 0.8 w 56 42 m 539.28 42 l S
+BT 0.420 0.460 0.530 rg /F1 8 Tf 1 0 0 1 56 30 Tm (Universidad Autonoma de Occidente - Dashboard de Bajas TI) Tj ET
+BT 0.420 0.460 0.530 rg /F1 8 Tf 1 0 0 1 479.28 30 Tm (Pagina 5 de 5) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 4 0 R >>
+endobj
+10 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 5 0 R >>
+endobj
+11 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 6 0 R >>
+endobj
+12 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 7 0 R >>
+endobj
+13 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 8 0 R >>
+endobj
+14 0 obj
+<< /Type /Pages /Kids [9 0 R 10 0 R 11 0 R 12 0 R 13 0 R] /Count 5 >>
+endobj
+15 0 obj
+<< /Type /Catalog /Pages 14 0 R >>
+endobj
+xref
+0 16
+0000000000 65535 f 
+0000000015 00000 n 
+0000000112 00000 n 
+0000000214 00000 n 
+0000000309 00000 n 
+0000005545 00000 n 
+0000012134 00000 n 
+0000019007 00000 n 
+0000024735 00000 n 
+0000028860 00000 n 
+0000029013 00000 n 
+0000029167 00000 n 
+0000029321 00000 n 
+0000029475 00000 n 
+0000029629 00000 n 
+0000029715 00000 n 
+trailer
+<< /Size 16 /Root 15 0 R >>
+startxref
+29766
+%%EOF
