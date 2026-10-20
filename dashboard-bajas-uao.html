@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Ejecutivo · Bajas de Activos TI · UAO</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#f4f6fb; --panel:#ffffff; --panel-2:#fbfcfe; --text:#1b2330; --muted:#6b7688;
+  --border:#e6eaf2; --brand:#e2001a; --brand-2:#ff3b5c; --accent:#2563eb;
+  --c1:#e2001a; --c2:#2563eb; --c3:#f59e0b; --c4:#10b981; --c5:#8b5cf6; --c6:#06b6d4;
+  --c7:#ec4899; --c8:#64748b; --c9:#f97316; --c10:#14b8a6;
+  --shadow:0 1px 3px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.06);
+  --radius:16px;
+}
+[data-theme="dark"]{
+  --bg:#0e1420; --panel:#151d2b; --panel-2:#1a2335; --text:#e9eef7; --muted:#93a0b5;
+  --border:#263347; --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.5;
+  transition:background .3s ease,color .3s ease;
+}
+.wrap{max-width:1320px;margin:0 auto;padding:24px 20px 60px}
+header.top{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  flex-wrap:wrap;margin-bottom:22px;
+}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{
+  width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;
+  font-weight:800;font-size:20px;letter-spacing:.5px;box-shadow:var(--shadow);
+}
+.brand h1{font-size:20px;margin:0;font-weight:700}
+.brand p{margin:0;color:var(--muted);font-size:13px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.theme-btn{
+  border:1px solid var(--border);background:var(--panel);color:var(--text);
+  padding:10px 16px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;
+  display:flex;align-items:center;gap:8px;box-shadow:var(--shadow);transition:.2s;
+}
+.theme-btn:hover{border-color:var(--accent)}
+
+/* Filtros */
+.filters{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px;box-shadow:var(--shadow);margin-bottom:22px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;align-items:end;
+}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.field select,.field input{
+  padding:10px 12px;border:1px solid var(--border);border-radius:10px;
+  background:var(--panel-2);color:var(--text);font-size:14px;outline:none;transition:.15s;
+}
+.field select:focus,.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.reset-btn{
+  padding:10px 16px;border:1px solid var(--brand);background:transparent;color:var(--brand);
+  border-radius:10px;cursor:pointer;font-weight:700;font-size:14px;transition:.2s;height:fit-content;
+}
+.reset-btn:hover{background:var(--brand);color:#fff}
+
+/* Chips categorías */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{
+  padding:8px 14px;border:1px solid var(--border);border-radius:999px;background:var(--panel);
+  color:var(--muted);cursor:pointer;font-size:13px;font-weight:600;transition:.18s;box-shadow:var(--shadow);
+}
+.chip:hover{color:var(--text);border-color:var(--accent)}
+.chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.kpi{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--brand)}
+.kpi:nth-child(2)::before{background:var(--c2)}
+.kpi:nth-child(3)::before{background:var(--c3)}
+.kpi:nth-child(4)::before{background:var(--c4)}
+.kpi:nth-child(5)::before{background:var(--c5)}
+.kpi:nth-child(6)::before{background:var(--c6)}
+.kpi .label{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.kpi .value{font-size:30px;font-weight:800;margin-top:6px;line-height:1}
+.kpi .sub{font-size:12px;color:var(--muted);margin-top:8px}
+
+/* Grid de gráficos */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px;box-shadow:var(--shadow);
+}
+.card h3{margin:0 0 4px;font-size:15px;font-weight:700}
+.card p.hint{margin:0 0 14px;font-size:12px;color:var(--muted)}
+.chart-box{position:relative;height:300px}
+.card.wide{grid-column:1 / -1}
+.chart-box.tall{height:340px}
+
+/* Tabla */
+.table-card{margin-top:18px}
+.table-scroll{overflow-x:auto;max-height:440px;overflow-y:auto;border:1px solid var(--border);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:720px}
+thead th{
+  position:sticky;top:0;background:var(--panel-2);text-align:left;padding:11px 14px;
+  font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;
+}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--border)}
+tbody tr:hover{background:var(--panel-2)}
+.badge{padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
+footer{margin-top:34px;text-align:center;color:var(--muted);font-size:12px}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">UAO</div>
+      <div>
+        <h1>Dashboard Ejecutivo · Bajas de Activos TI</h1>
+        <p>Unidad de Servicio al Usuario · Solicitudes de baja (DITI) · 2024–2025</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="theme-btn" id="themeBtn">🌙 <span>Modo oscuro</span></button>
+    </div>
+  </header>
+
+  <!-- FILTROS -->
+  <section class="filters">
+    <div class="field">
+      <label for="fMonth">Mes de solicitud</label>
+      <select id="fMonth"><option value="">Todos los meses</option></select>
+    </div>
+    <div class="field">
+      <label for="fBrand">Marca / Fabricante</label>
+      <select id="fBrand"><option value="">Todas las marcas</option></select>
+    </div>
+    <div class="field">
+      <label for="fDoc">Documento (DITI)</label>
+      <select id="fDoc"><option value="">Todos los documentos</option></select>
+    </div>
+    <div class="field">
+      <label for="fSearch">Buscar (descripción / serie / inventario)</label>
+      <input id="fSearch" type="text" placeholder="Ej: OPTIPLEX, Avaya, 124755…">
+    </div>
+    <button class="reset-btn" id="resetBtn">↺ Limpiar filtros</button>
+  </section>
+
+  <!-- CHIPS CATEGORÍA -->
+  <div class="chips" id="chips"></div>
+
+  <!-- KPIs -->
+  <section class="kpis" id="kpis"></section>
+
+  <!-- GRÁFICOS -->
+  <section class="grid">
+    <div class="card">
+      <h3>Distribución por categoría de activo</h3>
+      <p class="hint">Unidades dadas de baja agrupadas por tipo de equipo.</p>
+      <div class="chart-box"><canvas id="chartCat"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Participación por marca / fabricante</h3>
+      <p class="hint">Peso de cada marca sobre el total de unidades.</p>
+      <div class="chart-box"><canvas id="chartBrand"></canvas></div>
+    </div>
+    <div class="card wide">
+      <h3>Tendencia mensual de bajas</h3>
+      <p class="hint">Unidades y número de solicitudes por mes.</p>
+      <div class="chart-box"><canvas id="chartTrend"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Top 8 modelos / descripciones</h3>
+      <p class="hint">Descripciones con mayor cantidad de unidades.</p>
+      <div class="chart-box tall"><canvas id="chartTop"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Unidades por documento (DITI)</h3>
+      <p class="hint">Volumen de activos solicitado en cada documento.</p>
+      <div class="chart-box tall"><canvas id="chartDoc"></canvas></div>
+    </div>
+  </section>
+
+  <!-- TABLA -->
+  <section class="card table-card">
+    <h3>Detalle de activos (<span id="rowCount">0</span> registros)</h3>
+    <p class="hint">Resultado filtrado del inventario de bajas.</p>
+    <div class="table-scroll">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>Documento</th><th>Fecha</th><th>Cant.</th><th>Categoría</th>
+            <th>Descripción</th><th>Marca</th><th>Serie No.</th><th>No. Inventario</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Generado a partir de las Solicitudes de Baja (DITI) · Universidad Autónoma de Occidente · Campus Valle del Lili, Cali.
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   DATOS: mapeo directo de las tablas del documento (DITI).
+   Cada objeto = una fila de activo.
+   doc  -> código del documento DITI
+   date -> fecha ISO de la solicitud
+   qty  -> cantidad (columna "Cantidad")
+   cat  -> categoría normalizada
+   desc -> descripción del elemento
+   brand-> marca/fabricante
+   serie-> serie No.
+   inv  -> No. inventario
+   ============================================================ */
+const RAW = [
+  // DITI-4.6-14 (2025-02-25)
+  {doc:"DITI-4.6-14",date:"2025-02-25",qty:1,cat:"CPU/Computador",desc:"CPU DELL Optiplex 7440",brand:"Dell",serie:"8JGHGB2",inv:""},
+  // DITI-4.6-15 (2025-03-04)
+  {doc:"DITI-4.6-15",date:"2025-03-04",qty:1,cat:"Teclado",desc:"Teclado HP",brand:"HP",serie:"BDMGH0CHH7NB8P",inv:"119718"},
+  {doc:"DITI-4.6-15",date:"2025-03-04",qty:1,cat:"Diadema/Audio",desc:"Diadema Sennheiser",brand:"Sennheiser",serie:"",inv:""},
+  {doc:"DITI-4.6-15",date:"2025-03-04",qty:1,cat:"Diadema/Audio",desc:"Diadema XKIM",brand:"Xkim",serie:"",inv:""},
+  {doc:"DITI-4.6-15",date:"2025-03-04",qty:1,cat:"Mouse",desc:"Lote de Mouse USB",brand:"Genérico",serie:"",inv:""},
+  {doc:"DITI-4.6-15",date:"2025-03-04",qty:1,cat:"Teléfono",desc:"teléfono Avaya",brand:"Avaya",serie:"10WZ24553564",inv:"98753"},
+  {doc:"DITI-4.6-15",date:"2025-03-04",qty:3,cat:"Portátil",desc:"PORTATIL HP MINI 210-1010LA",brand:"HP",serie:"CNF0130PRB / CNF0130PHJ / CNF0130Q1C",inv:"93556-93558"},
+  {doc:"DITI-4.6-15",date:"2025-03-04",qty:1,cat:"Otros",desc:"trípode DK-3520",brand:"Genérico",serie:"",inv:"130697"},
+  // DITI-4.6-16 (2025-03-06)
+  {doc:"DITI-4.6-16",date:"2025-03-06",qty:2,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV2LO30089P0QXOA03 / CN0F2JV2LO30079S0X8JA03",inv:""},
+  {doc:"DITI-4.6-16",date:"2025-03-06",qty:1,cat:"Teléfono",desc:"teléfono Avaya",brand:"Avaya",serie:"10WZ29654506",inv:"99421"},
+  {doc:"DITI-4.6-16",date:"2025-03-06",qty:1,cat:"Teclado",desc:"Teclado MAC",brand:"Apple",serie:"3382400SGZ0XA",inv:"88909"},
+  {doc:"DITI-4.6-16",date:"2025-03-06",qty:3,cat:"Diadema/Audio",desc:"Diadema PLANTRONICS DSP-400",brand:"Plantronics",serie:"",inv:"42505/42504/42503"},
+  {doc:"DITI-4.6-16",date:"2025-03-06",qty:1,cat:"Diadema/Audio",desc:"Diadema Study Room Labs",brand:"Genérico",serie:"",inv:""},
+  {doc:"DITI-4.6-16",date:"2025-03-06",qty:1,cat:"Diadema/Audio",desc:"Diadema logitech ML 416",brand:"Logitech",serie:"",inv:""},
+  // DITI-4.6-17 (2025-03-13)
+  {doc:"DITI-4.6-17",date:"2025-03-13",qty:4,cat:"Teclado",desc:"Teclado",brand:"Dell",serie:"CN08NYJV7382676707IVA02 (+3)",inv:""},
+  {doc:"DITI-4.6-17",date:"2025-03-13",qty:2,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0R9F1P74261618405LA03 / CN0FMXNR641806460U0U",inv:"122601"},
+  {doc:"DITI-4.6-17",date:"2025-03-13",qty:1,cat:"Diadema/Audio",desc:"Diadema Koss",brand:"Koss",serie:"KSS0730772",inv:""},
+  {doc:"DITI-4.6-17",date:"2025-03-13",qty:1,cat:"Mouse",desc:"Lote de Mouse",brand:"Genérico",serie:"",inv:""},
+  {doc:"DITI-4.6-17",date:"2025-03-13",qty:1,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ24552864",inv:"98877"},
+  // DITI-4.6-18 (2025-03-17)
+  {doc:"DITI-4.6-18",date:"2025-03-17",qty:3,cat:"Teclado",desc:"Teclado",brand:"Dell",serie:"CN0F2JV2LO30079S0W0YA03 (+2)",inv:""},
+  {doc:"DITI-4.6-18",date:"2025-03-17",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0FMXNR6418064605JU",inv:""},
+  {doc:"DITI-4.6-18",date:"2025-03-17",qty:1,cat:"Tablet",desc:"TABLETA IPAD AIR2",brand:"Apple",serie:"DMPS409VG5VJ",inv:"122701"},
+  {doc:"DITI-4.6-18",date:"2025-03-17",qty:1,cat:"Diadema/Audio",desc:"Diadema Plantronics inalámbrica",brand:"Plantronics",serie:"",inv:"DUM865"},
+  // DITI-4.6-19 (2025-04-30)
+  {doc:"DITI-4.6-19",date:"2025-04-30",qty:1,cat:"Celular",desc:"TELEFONO CELULAR SAMSUNG GALAXY S20 FE LTE",brand:"Samsung",serie:"RF8R426NVNL",inv:"134358"},
+  {doc:"DITI-4.6-19",date:"2025-04-30",qty:1,cat:"Celular",desc:"TELEFONO CELULAR SAMSUNG GALAXY A02 LTE 32GB",brand:"Samsung",serie:"R58R54B807A",inv:"134355"},
+  // DITI-4.6-20 (2025-03-26)
+  {doc:"DITI-4.6-20",date:"2025-03-26",qty:1,cat:"Otros",desc:"FAX MODEM EXTERNO US ROBOTICS 33.6K",brand:"US Robotics",serie:"21NJ2877STBC",inv:"11380"},
+  {doc:"DITI-4.6-20",date:"2025-03-26",qty:1,cat:"Otros",desc:"TABLETA DIGITALIZADORA WACOM INTUOS BASIC",brand:"Wacom",serie:"8DH00R2018234",inv:"128615"},
+  {doc:"DITI-4.6-20",date:"2025-03-26",qty:1,cat:"Otros",desc:"Lápiz Apple Pen",brand:"Apple",serie:"0124918",inv:""},
+  {doc:"DITI-4.6-20",date:"2025-03-26",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV7382671400U3",inv:""},
+  {doc:"DITI-4.6-20",date:"2025-03-26",qty:2,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  {doc:"DITI-4.6-20",date:"2025-03-26",qty:1,cat:"Otros",desc:"Adaptador de corriente 143W Ethernet iMac M2",brand:"Apple",serie:"",inv:""},
+  {doc:"DITI-4.6-20",date:"2025-03-26",qty:1,cat:"Otros",desc:"QUEMADOR EXTERNO DVD-RW SAMSUNG SLIM USB 2.0",brand:"Samsung",serie:"R8L56GWC7000KH",inv:"49582"},
+  // DITI-4.6-22 (2025-03-26)
+  {doc:"DITI-4.6-22",date:"2025-03-26",qty:5,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ24552833 (+4)",inv:"98739/99368/99360/98833/99370"},
+  {doc:"DITI-4.6-22",date:"2025-03-26",qty:5,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  {doc:"DITI-4.6-22",date:"2025-03-26",qty:1,cat:"CPU/Computador",desc:"CPU AIO DELL OPTIPLEX 7450 AIO",brand:"Dell",serie:"D1QDHL2",inv:"126005"},
+  {doc:"DITI-4.6-22",date:"2025-03-26",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 7010 DESKTOP",brand:"Dell",serie:"DNS78Z1",inv:"110620"},
+  // DITI-4.6-23 (2025-04-21) - Apple
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:"Macpro",brand:"Apple",serie:"F5KNW0FMF9VM",inv:"116188"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:'Imac 21"',brand:"Apple",serie:"QP05103PDB6",inv:"100033"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:'Imac 27"',brand:"Apple",serie:"D25JD08YDHJW",inv:"106649"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:'Imac 21"',brand:"Apple",serie:"C02N93WAF8J3",inv:"115830"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:'Imac 21"',brand:"Apple",serie:"C02NC3U2F8J3",inv:"115838"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:'Imac 21"',brand:"Apple",serie:"C02QM641GG78",inv:"122223"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:'Imac 21"',brand:"Apple",serie:"C02QK2W3GG78",inv:"122224"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:'Imac 21"',brand:"Apple",serie:"C02N93Q8F8J3",inv:"115836"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:'Imac 21"',brand:"Apple",serie:"C02N93VXF8J3",inv:"115812"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:'Imac 21"',brand:"Apple",serie:"C02N94AUF8J3",inv:"115797"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:'Imac 21"',brand:"Apple",serie:"C02NC5AEF8J3",inv:"115809"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:"Macpro",brand:"Apple",serie:"F5KQW092F693",inv:"121829"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"CPU/Computador",desc:"Macpro",brand:"Apple",serie:"F5KQW09MF693",inv:"121831"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"Portátil",desc:"Portatil MacBook",brand:"Apple",serie:"W8843APE1G0",inv:"88076"},
+  {doc:"DITI-4.6-23",date:"2025-04-21",qty:1,cat:"Portátil",desc:"Portatil MacBook",brand:"Apple",serie:"SC02J55AADRVC",inv:"106282"},
+  // DITI-4.6-24 (2025-04-24)
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ29654599",inv:"99462"},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teléfono",desc:"teléfono Yealink",brand:"Yealink",serie:"2119518051513135",inv:"128931"},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teléfono",desc:"teléfono Avaya",brand:"Avaya",serie:"10WZ24552094",inv:"98827"},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teléfono",desc:"teléfono Avaya",brand:"Avaya",serie:"19WZ264003MK",inv:"132724"},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV7382672A00FFA02",inv:""},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV7382676707U7A02",inv:""},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV7382671B00A4A02",inv:""},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0DJ415716169BA0AUR",inv:"92472"},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teclado",desc:"Teclado DELL Blanco",brand:"Dell",serie:"NG",inv:"NG"},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teléfono",desc:"Avaya Yealink D14370",brand:"Avaya",serie:"4121116110D14370",inv:""},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teléfono",desc:"teléfono Avaya Vantage",brand:"Avaya",serie:"19WZ042005GP",inv:"132556"},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teléfono",desc:"teléfono Avaya Vantage",brand:"Avaya",serie:"19WZ042005MX",inv:"58916"},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teléfono",desc:"teléfono Avaya Vantage",brand:"Avaya",serie:"19WZ042005J9",inv:"132553"},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teléfono",desc:"teléfono Avaya Vantage",brand:"Avaya",serie:"19WZ48600G2J",inv:""},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:1,cat:"Teléfono",desc:"teléfono Avaya Vantage",brand:"Avaya",serie:"18WZ392004NW",inv:"132557"},
+  {doc:"DITI-4.6-24",date:"2025-04-24",qty:5,cat:"Mouse",desc:"Mouse",brand:"Genérico",serie:"",inv:""},
+  // DITI-4.6-25 (2025-04-24)
+  {doc:"DITI-4.6-25",date:"2025-04-24",qty:1,cat:"Monitor",desc:'Monitor DELL 19"',brand:"Dell",serie:"55VLZA7",inv:"95804"},
+  {doc:"DITI-4.6-25",date:"2025-04-24",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR OPTIPLEX 7440 AIO",brand:"Dell",serie:"FJ2XFK2",inv:"124755"},
+  {doc:"DITI-4.6-25",date:"2025-04-24",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR OPTIPLEX 7440 AIO",brand:"Dell",serie:"GYFSFK2",inv:"124646"},
+  {doc:"DITI-4.6-25",date:"2025-04-24",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR OPTIPLEX 7440 AIO",brand:"Dell",serie:"HGC0FB2",inv:"121960"},
+  {doc:"DITI-4.6-25",date:"2025-04-24",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR OPTIPLEX 7450 AIO",brand:"Dell",serie:"51KY0M2",inv:"127052"},
+  {doc:"DITI-4.6-25",date:"2025-04-24",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR OPTIPLEX 7440 AIO",brand:"Dell",serie:"FJPWFK2",inv:"124690"},
+  {doc:"DITI-4.6-25",date:"2025-04-24",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR OPTIPLEX 7450 AIO",brand:"Dell",serie:"57TL7M2",inv:"126963"},
+  {doc:"DITI-4.6-25",date:"2025-04-24",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR OPTIPLEX 7450 AIO",brand:"Dell",serie:"CP4FHL2",inv:"126115"},
+  // DITI-4.6-26 (2025-04-28)
+  {doc:"DITI-4.6-26",date:"2025-04-28",qty:4,cat:"Tablet",desc:"IPAD AIR 2 WI-FI",brand:"Apple",serie:"DMQRKENXG5VW (+3)",inv:"122208/52916/122177/52931"},
+  {doc:"DITI-4.6-26",date:"2025-04-28",qty:1,cat:"CPU/Computador",desc:"CPU DELL OPTIPLEX 7040",brand:"Dell",serie:"15J8QD2",inv:"122615"},
+  {doc:"DITI-4.6-26",date:"2025-04-28",qty:3,cat:"CPU/Computador",desc:"CPU DELL OPTIPLEX 7050",brand:"Dell",serie:"BYWQXK2 / 6TSYFK2 / BZ8CHL2",inv:"125935/125068/125936"},
+  {doc:"DITI-4.6-26",date:"2025-04-28",qty:1,cat:"CPU/Computador",desc:"CPU DELL OPTIPLEX 9010",brand:"Dell",serie:"D44GHX1",inv:"109313"},
+  // DITI-4.6-28 (2025-05-07)
+  {doc:"DITI-4.6-28",date:"2025-05-07",qty:5,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ29654610 (+4)",inv:"99589/99323/99435/99369/99454"},
+  // DITI-4.6-30 (2025-05-23)
+  {doc:"DITI-4.6-30",date:"2025-05-23",qty:5,cat:"Teclado",desc:"Teclados DELL",brand:"Dell",serie:"CN08NYJV73826767073ZA02 (+4)",inv:""},
+  {doc:"DITI-4.6-30",date:"2025-05-23",qty:1,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ24353864",inv:"98750"},
+  {doc:"DITI-4.6-30",date:"2025-05-23",qty:1,cat:"Mouse",desc:"Lote Mouse",brand:"Genérico",serie:"",inv:""},
+  // DITI-4.6-31 (2025-05-27)
+  {doc:"DITI-4.6-31",date:"2025-05-27",qty:6,cat:"Teclado",desc:"Teclados DELL",brand:"Dell",serie:"CN0F2JV27161659Q0OPJA01 (+5)",inv:""},
+  {doc:"DITI-4.6-31",date:"2025-05-27",qty:2,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  // DITI-4.6-32 (2025-05-30)
+  {doc:"DITI-4.6-32",date:"2025-05-30",qty:6,cat:"Teclado",desc:"Teclados DELL",brand:"Dell",serie:"CN0F2JV2LO3000BU01FDA04 (+5)",inv:"96253/109520"},
+  {doc:"DITI-4.6-32",date:"2025-05-30",qty:5,cat:"Teléfono",desc:"Teléfonos Avaya",brand:"Avaya",serie:"10WZ29654640 (+4)",inv:"99362/98784/99038/98803/99318"},
+  {doc:"DITI-4.6-32",date:"2025-05-30",qty:1,cat:"Diadema/Audio",desc:"Diadema Xkim",brand:"Xkim",serie:"",inv:""},
+  {doc:"DITI-4.6-32",date:"2025-05-30",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0FMXNR641806460TSU",inv:""},
+  {doc:"DITI-4.6-32",date:"2025-05-30",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0JF44YFCC0074EGH7UA00",inv:""},
+  // DITI-4.6-33 (2025-05-30) Obsoletos
+  {doc:"DITI-4.6-33",date:"2025-05-30",qty:4,cat:"CPU/Computador",desc:'COMPUTADOR MAC PRO 27" Cilindro (Obsoleto)',brand:"Apple",serie:"F5KMV1U8F9VM (+3)",inv:"116180/116181/116167/116169"},
+  {doc:"DITI-4.6-33",date:"2025-05-30",qty:4,cat:"Monitor",desc:'Monitor APPLE THUNDERBOLT DISPLAY 27" (Obsoleto)',brand:"Apple",serie:"C02ND3PNF2GC (+3)",inv:""},
+  // DITI-4.6-34 (2025-05-30)
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"Portátil",desc:"COMPUTADOR PORTÁTIL VOS V3460 (2013)",brand:"Dell",serie:"FB1D37V",inv:"109008"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"Portátil",desc:"COMPUTADOR PORTATIL LATITUDE E6440 (2014)",brand:"Dell",serie:"FZVTG12",inv:"113761"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"Portátil",desc:"COMPUTADOR PORTATIL PRECISION M4400 (2009)",brand:"Dell",serie:"1W3NXH1",inv:"88441"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"Monitor",desc:'MONITOR DELL WIDE 19"',brand:"Dell",serie:"CN04MGYF7426105R436U",inv:"95708"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"Monitor",desc:'MONITOR DELL WIDE 19"',brand:"Dell",serie:"CN0XYF7K7287205F1TPI",inv:"94953"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9020 MINI (2015)",brand:"Dell",serie:"9R0WT52",inv:"119655"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9020 MINI (2015)",brand:"Dell",serie:"5J5XZ72",inv:"120663"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"CPU/Computador",desc:"CPU SFF DELL OPTIPLEX 7060",brand:"Dell",serie:"B8JT0T2",inv:"129773"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"CPU/Computador",desc:"CPU SFF DELL OPTIPLEX 7060",brand:"Dell",serie:"B8GT0T2",inv:"129743"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"CPU/Computador",desc:"CPU DELL OPTIPLEX 7450 AIO",brand:"Dell",serie:"519K7M2",inv:"127076"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"CPU/Computador",desc:"CPU DELL OPTIPLEX 7450 AIO",brand:"Dell",serie:"CNZQXK2",inv:"126021"},
+  {doc:"DITI-4.6-34",date:"2025-05-30",qty:1,cat:"CPU/Computador",desc:"CPU DELL OPTIPLEX 7450 AIO",brand:"Dell",serie:"D1VCHL2",inv:"126082"},
+  // DITI-4.6-36 (2025-06-04)
+  {doc:"DITI-4.6-36",date:"2025-06-04",qty:1,cat:"CPU/Computador",desc:"TODO EN UNO DELL OPTIPLEX 7450 AIO",brand:"Dell",serie:"CNZCHL2",inv:"126085"},
+  {doc:"DITI-4.6-36",date:"2025-06-04",qty:1,cat:"CPU/Computador",desc:"TODO EN UNO DELL OPTIPLEX 7450 AIO",brand:"Dell",serie:"57WY0M2",inv:"126976"},
+  {doc:"DITI-4.6-36",date:"2025-06-04",qty:1,cat:"Teléfono",desc:"TELÉFONO IP GAMA MEDIA 1608",brand:"Avaya",serie:"10WZ29653245",inv:"99361"},
+  {doc:"DITI-4.6-36",date:"2025-06-04",qty:1,cat:"Teléfono",desc:"TELÉFONO IP GAMA MEDIA 1608",brand:"Avaya",serie:"10WZ31552999",inv:"99206"},
+  {doc:"DITI-4.6-36",date:"2025-06-04",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV2LO30079S0X6IA03",inv:""},
+  {doc:"DITI-4.6-36",date:"2025-06-04",qty:1,cat:"Monitor",desc:"MONITOR DELL 24",brand:"Dell",serie:"CN-0FMXNR-64180-664-1TKT",inv:""},
+  // DITI-4.6-37 (2025-06-06)
+  {doc:"DITI-4.6-37",date:"2025-06-06",qty:1,cat:"CPU/Computador",desc:"TODO EN UNO DELL OPTIPLEX 7440 AIO",brand:"Dell",serie:"GYDSFK2",inv:"124831"},
+  {doc:"DITI-4.6-37",date:"2025-06-06",qty:1,cat:"Otros",desc:"Sata Dock USB Duplicador",brand:"Genérico",serie:"SATDOCK22RE",inv:""},
+  {doc:"DITI-4.6-37",date:"2025-06-06",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV73826767079VA02",inv:""},
+  {doc:"DITI-4.6-37",date:"2025-06-06",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV7382671B01OMA02",inv:""},
+  {doc:"DITI-4.6-37",date:"2025-06-06",qty:1,cat:"Otros",desc:"RECEPTOR USB CINERGY UNIVERSAL",brand:"Terratec",serie:"41696-8",inv:"100185"},
+  {doc:"DITI-4.6-37",date:"2025-06-06",qty:1,cat:"Otros",desc:"RECEPTOR PCI CINERGY",brand:"Terratec",serie:"41696-9.1",inv:"100187"},
+  {doc:"DITI-4.6-37",date:"2025-06-06",qty:1,cat:"Celular",desc:"TELEFONO CELULAR SMARTPHONE NOKIA 5800",brand:"Nokia",serie:"0592207HR25R2N",inv:"96697"},
+  {doc:"DITI-4.6-37",date:"2025-06-06",qty:1,cat:"Otros",desc:"RECEPTOR PCI CINERGY",brand:"Terratec",serie:"41696-9",inv:"100186"},
+  {doc:"DITI-4.6-37",date:"2025-06-06",qty:1,cat:"Mouse",desc:"Lote Mouse",brand:"Genérico",serie:"",inv:""},
+  // DITI-4.6-38 (2025-07-02)
+  {doc:"DITI-4.6-38",date:"2025-07-02",qty:8,cat:"Diadema/Audio",desc:"Diademas Xkim",brand:"Xkim",serie:"Ng",inv:"Ng"},
+  {doc:"DITI-4.6-38",date:"2025-07-02",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0R9F1P74261618ALNLA03",inv:""},
+  {doc:"DITI-4.6-38",date:"2025-07-02",qty:1,cat:"Teléfono",desc:"teléfono Avaya",brand:"Avaya",serie:"10WZ24553603",inv:"98995"},
+  {doc:"DITI-4.6-38",date:"2025-07-02",qty:1,cat:"CPU/Computador",desc:"CPU AIO OPTIPLEX 7440",brand:"Dell",serie:"GY4VFK2",inv:"124686"},
+  {doc:"DITI-4.6-38",date:"2025-07-02",qty:8,cat:"Otros",desc:"Tarjeta PCI E Multi AIO",brand:"Genérico",serie:"Ng",inv:"Ng"},
+  // DITI-4.6-39 (2025-07-09)
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:45,cat:"Otros",desc:"Bases para teléfonos Avaya",brand:"Avaya",serie:"",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:2,cat:"Teléfono",desc:"teléfono Avaya",brand:"Avaya",serie:"10WZ29654600 / 10WZ25052748",inv:"99629/99109"},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:1,cat:"Diadema/Audio",desc:"Diadema SH30 Sennheiser",brand:"Sennheiser",serie:"0136010798",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:2,cat:"Otros",desc:"Apple Pen1",brand:"Apple",serie:"HKHMQ248GWTJ / HKCK44WAGWTJ",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:1,cat:"Otros",desc:"Disco SDD",brand:"Genérico",serie:"MTFDDAK256TBN'1AR1ZABDA",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:1,cat:"Tablet",desc:"IPAD MINI RETINA WI-FI 16GB",brand:"Apple",serie:"F9GNLW1QFP84",inv:"52487"},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:1,cat:"Tablet",desc:"TABLETA IPAD AIR2 MGLW2CL/A",brand:"Apple",serie:"DMQS345GG5VJ",inv:"122702"},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:1,cat:"Otros",desc:"LEAP Motion",brand:"Genérico",serie:"S315A011930",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:2,cat:"Otros",desc:"Calibrador de Color i1 Display Pro",brand:"Genérico",serie:"I1-18-B-02-301007-04 / -301161-04",inv:"129139/129138"},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:7,cat:"Otros",desc:"Tablero de Tome su Numero",brand:"Genérico",serie:"",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:4,cat:"Otros",desc:"Tester Data Shark PA70081",brand:"Genérico",serie:"",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:3,cat:"Otros",desc:"Crimper pinza HDMI PA70080",brand:"Genérico",serie:"",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:5,cat:"Otros",desc:"Kit de ponchado cables HDMI Greenlee",brand:"Greenlee",serie:"HDCN24-50",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:10,cat:"Otros",desc:"Terminal VGA 15 pines",brand:"Genérico",serie:"",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:1,cat:"Otros",desc:"Fuente de poder Imac",brand:"Apple",serie:"C06449704WHFJ5LAZ",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:1,cat:"Otros",desc:"Tester CapaCheck Plus 735 XL",brand:"Genérico",serie:"0033281",inv:""},
+  {doc:"DITI-4.6-39",date:"2025-07-09",qty:10,cat:"Teclado",desc:"Logitech combo inalámbrico EX110/MK300",brand:"Logitech",serie:"37101 (+9)",inv:""},
+  // DITI-4.6-40 (2025-07-15)
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"CPU/Computador",desc:"CPU TODO EN UNO DELL OPTIPLEX 7460 AIO",brand:"Dell",serie:"CN0THC2PPE2008A82135A00",inv:"129660"},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"CPU/Computador",desc:"CPU TODO EN UNO DELL OPTIPLEX 5400 AIO",brand:"Dell",serie:"DNXDYS3",inv:"135628"},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"CPU/Computador",desc:"CPU TODO EN UNO DELL OPTIPLEX 7460 AIO",brand:"Dell",serie:"CN0THC2PPE2008A50502A00",inv:"129710"},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"CPU/Computador",desc:"CPU TODO EN UNO DELL OPTIPLEX 5400 AIO",brand:"Dell",serie:"7NXDYS3",inv:"135624"},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"CPU/Computador",desc:"CPU TODO EN UNO DELL OPTIPLEX 7440 AIO",brand:"Dell",serie:"GY3TFK2",inv:"124892"},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"CPU/Computador",desc:"CPU TODO EN UNO DELL OPTIPLEX 7450 AIO",brand:"Dell",serie:"583X0M2",inv:"126975"},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0JF44YFCC0089MD45BA04",inv:""},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"CPU/Computador",desc:"CPU TODO EN UNO DELL OPTIPLEX 7440 AIO",brand:"Dell",serie:"",inv:"124856"},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV7382671B005DA02",inv:""},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"CPU/Computador",desc:"CPU TODO EN UNO DELL OPTIPLEX 7470 AIO",brand:"Dell",serie:"",inv:"133151"},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"CPU/Computador",desc:"CPU TODO EN UNO DELL OPTIPLEX 7460 AIO",brand:"Dell",serie:"CN0THC2PPE2008A60805A00",inv:"129669"},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"CPU/Computador",desc:'CPU IMAC RETINA 27" 5K',brand:"Apple",serie:"SC02W50J2J1GJ",inv:"129950"},
+  {doc:"DITI-4.6-40",date:"2025-07-15",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV2LO30089P0U4WA03",inv:""},
+  // DITI-4.6-41 (2025-07-22)
+  {doc:"DITI-4.6-41",date:"2025-07-22",qty:5,cat:"Celular",desc:"Teléfono Celular Samsung Galaxy J1 ace",brand:"Samsung",serie:"RV8J10W9JKA (+4)",inv:""},
+  // DITI-4.6-42 (2025-07-22)
+  {doc:"DITI-4.6-42",date:"2025-07-22",qty:9,cat:"Otros",desc:"lápiz Smart - Tableros Interactivo",brand:"Genérico",serie:"",inv:""},
+  {doc:"DITI-4.6-42",date:"2025-07-22",qty:3,cat:"Teléfono",desc:"teléfono Avaya",brand:"Avaya",serie:"10WZ29654565 / 10WZ24553563 / 10WZ31552929",inv:"99452/46226/99427"},
+  {doc:"DITI-4.6-42",date:"2025-07-22",qty:1,cat:"Monitor",desc:'MONITOR LG 22" SUPER LED',brand:"LG",serie:"306MXAY54752",inv:"110385"},
+  {doc:"DITI-4.6-42",date:"2025-07-22",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV2LO30079S0VLWA03",inv:""},
+  // DITI-4.6-43 (2025-07-22)
+  {doc:"DITI-4.6-43",date:"2025-07-22",qty:2,cat:"CPU/Computador",desc:"CPU DELL AIO OPTIPLEX 7440",brand:"Dell",serie:"FHZWFK2 / HG74FB2",inv:"124851/122031"},
+  {doc:"DITI-4.6-43",date:"2025-07-22",qty:1,cat:"Otros",desc:"UPS SU 2200 NET A 2200VA",brand:"APC",serie:"00535181",inv:"19107"},
+  {doc:"DITI-4.6-43",date:"2025-07-22",qty:1,cat:"Otros",desc:"UPS DE 1 KVS",brand:"Genérico",serie:"10058500512",inv:"34880"},
+  {doc:"DITI-4.6-43",date:"2025-07-22",qty:1,cat:"Teléfono",desc:"teléfono Avaya",brand:"Avaya",serie:"001B4F50B273",inv:"99108"},
+  {doc:"DITI-4.6-43",date:"2025-07-22",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV7158158A01LWA01",inv:""},
+  {doc:"DITI-4.6-43",date:"2025-07-22",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV2LO30079S0VF2A03",inv:""},
+  // DITI-4.6-44 (2025-07-22)
+  {doc:"DITI-4.6-44",date:"2025-07-22",qty:1,cat:"Monitor",desc:"Monitor Apple",brand:"Apple",serie:"CY8470J3XMP",inv:"89487"},
+  {doc:"DITI-4.6-44",date:"2025-07-22",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV27161675J0290A03",inv:""},
+  {doc:"DITI-4.6-44",date:"2025-07-22",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV7382671B02YGA02",inv:""},
+  {doc:"DITI-4.6-44",date:"2025-07-22",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV7382665I05MNA02",inv:""},
+  {doc:"DITI-4.6-44",date:"2025-07-22",qty:1,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ31552665",inv:"99429"},
+  {doc:"DITI-4.6-44",date:"2025-07-22",qty:1,cat:"Mouse",desc:"Lote Mouse",brand:"Genérico",serie:"",inv:""},
+  // DITI-4.6-45 (2025-08-06)
+  {doc:"DITI-4.6-45",date:"2025-08-06",qty:2,cat:"CPU/Computador",desc:"CPU DELL AIO OPTIPLEX 7460",brand:"Dell",serie:"CN0THC2PPE2008A60660A00 / 5VMQFX2",inv:"129619/131161"},
+  // DITI-4.6-46 (2025-08-06)
+  {doc:"DITI-4.6-46",date:"2025-08-06",qty:1,cat:"Teléfono",desc:"teléfono Avaya",brand:"Avaya",serie:"10WZ29654540",inv:"99343"},
+  {doc:"DITI-4.6-46",date:"2025-08-06",qty:1,cat:"Diadema/Audio",desc:"Parlantes para PC DELL",brand:"Dell",serie:"CN0CJ378371746820057",inv:""},
+  {doc:"DITI-4.6-46",date:"2025-08-06",qty:1,cat:"Diadema/Audio",desc:"Parlantes para PC Labtec",brand:"Labtec",serie:"223492-001",inv:""},
+  {doc:"DITI-4.6-46",date:"2025-08-06",qty:1,cat:"Diadema/Audio",desc:"Diadema Logitech",brand:"Logitech",serie:"ng",inv:""},
+  {doc:"DITI-4.6-46",date:"2025-08-06",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN01GN56M6D0089E05DDA01",inv:""},
+  {doc:"DITI-4.6-46",date:"2025-08-06",qty:6,cat:"Mouse",desc:"Mouse USB",brand:"Genérico",serie:"ng",inv:""},
+  {doc:"DITI-4.6-46",date:"2025-08-06",qty:1,cat:"Otros",desc:"Cargador de portátil MacBook",brand:"Apple",serie:"ng",inv:""},
+  {doc:"DITI-4.6-46",date:"2025-08-06",qty:1,cat:"Otros",desc:"Cargador de portátil DELL",brand:"Dell",serie:"ng",inv:""},
+  // DITI-4.6-47 (2025-08-13)
+  {doc:"DITI-4.6-47",date:"2025-08-13",qty:1,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ29654555",inv:"99294"},
+  {doc:"DITI-4.6-47",date:"2025-08-13",qty:1,cat:"Otros",desc:"DISCO DURO EXTERNO USB 1TB TRANSCEND",brand:"Transcend",serie:"A66715-2529",inv:""},
+  {doc:"DITI-4.6-47",date:"2025-08-13",qty:1,cat:"Otros",desc:"DISCO DURO EXTERNO USB 1TB STARTECH",brand:"Startech",serie:"",inv:""},
+  {doc:"DITI-4.6-47",date:"2025-08-13",qty:2,cat:"Mouse",desc:"Mouse Magic Apple",brand:"Apple",serie:"ng",inv:""},
+  {doc:"DITI-4.6-47",date:"2025-08-13",qty:1,cat:"Otros",desc:"MODEM HUAWEI WIFI E5573",brand:"Huawei",serie:"3LKDU16922003059",inv:"56912"},
+  {doc:"DITI-4.6-47",date:"2025-08-13",qty:1,cat:"Otros",desc:"Cargador Apple Magsafe 2",brand:"Apple",serie:"D39532301J6DJ98BU",inv:""},
+  {doc:"DITI-4.6-47",date:"2025-08-13",qty:1,cat:"Tablet",desc:"IPAD MINI 4 WI-FI 128GB",brand:"Apple",serie:"F9FY2JU3GHKJ",inv:"130863"},
+  {doc:"DITI-4.6-47",date:"2025-08-13",qty:2,cat:"Teclado",desc:"TECLADO DELL Y MOUSE INALÁMBRICO KM-636",brand:"Dell",serie:"",inv:"122871/122873"},
+  {doc:"DITI-4.6-47",date:"2025-08-13",qty:3,cat:"Mouse",desc:"Mouse Dell",brand:"Dell",serie:"",inv:""},
+  {doc:"DITI-4.6-47",date:"2025-08-13",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR AIO OPTIPLEX 7440",brand:"Dell",serie:"FJPXFK2",inv:"124757"},
+  // DITI-4.6-49 (2025-08-13)
+  {doc:"DITI-4.6-49",date:"2025-08-13",qty:3,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ24553602 / 10WZ24552853 / 10WZ25052626",inv:"99070/98848/98636"},
+  {doc:"DITI-4.6-49",date:"2025-08-13",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR DELL OPTIPLEX 7450 AIO",brand:"Dell",serie:"516M7M2",inv:"126997"},
+  {doc:"DITI-4.6-49",date:"2025-08-13",qty:2,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV2LO3007AP08LDA03 / CN01GN56M6D0089E05DEA01",inv:""},
+  {doc:"DITI-4.6-49",date:"2025-08-13",qty:3,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  // DITI-4.6-51 (2025-09-02)
+  {doc:"DITI-4.6-51",date:"2025-09-02",qty:3,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ24552884 / 09N552301402 / 10WZ29653250",inv:"98706/99710/99286"},
+  {doc:"DITI-4.6-51",date:"2025-09-02",qty:1,cat:"Otros",desc:"3DConnexion Space Navigator",brand:"3Dconnexion",serie:"",inv:""},
+  {doc:"DITI-4.6-51",date:"2025-09-02",qty:3,cat:"Monitor",desc:"MONITOR DELL P2417H / S2230MX",brand:"Dell",serie:"CN0FMXNR6418066K040T (+2)",inv:"105066"},
+  // DITI-4.6-53 (2025-09-11)
+  {doc:"DITI-4.6-53",date:"2025-09-11",qty:2,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ32450053 / 10WZ29654633",inv:"99223/99263"},
+  {doc:"DITI-4.6-53",date:"2025-09-11",qty:3,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV27161674K003EA03 (+2)",inv:"109634"},
+  {doc:"DITI-4.6-53",date:"2025-09-11",qty:2,cat:"Teclado",desc:"Teclado Logitech",brand:"Logitech",serie:"2222MR07F308 / BEXJL0BCP369AR",inv:""},
+  {doc:"DITI-4.6-53",date:"2025-09-11",qty:1,cat:"Diadema/Audio",desc:"Diadema Logitech",brand:"Logitech",serie:"",inv:""},
+  {doc:"DITI-4.6-53",date:"2025-09-11",qty:1,cat:"Diadema/Audio",desc:"Diadema Xkim",brand:"Xkim",serie:"",inv:""},
+  {doc:"DITI-4.6-53",date:"2025-09-11",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"MX0NFJ8374446189984L",inv:"103009"},
+  {doc:"DITI-4.6-53",date:"2025-09-11",qty:1,cat:"CPU/Computador",desc:"CPU DELL studio XPS 9000",brand:"Dell",serie:"CXVXKM1",inv:"95685"},
+  // DITI-4.6-54 (2024-09-25)
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU DELL VOSTRO 460 MINI TOWER",brand:"Dell",serie:"46VG1R1",inv:"102934"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR OPTIPLEX 7040 SMALL",brand:"Dell",serie:"7LHMQD2",inv:"125113"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9010 DESKTOP",brand:"Dell",serie:"D4QGHX1",inv:"109359"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU COMPAQ 500B MT",brand:"HP",serie:"MXL0320R3Y",inv:"46879"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9010 DESKTOP",brand:"Dell",serie:"D4XGHX1",inv:"109353"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9010 DESKTOP",brand:"Dell",serie:"D42HHX1",inv:"109324"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9010 DESKTOP",brand:"Dell",serie:"D4WGHX1",inv:"109352"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 7010 DESKTOP",brand:"Dell",serie:"GGV8TW1",inv:"108435"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9010 DESKTOP",brand:"Dell",serie:"8ZSRFX1",inv:"109136"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9010 DESKTOP",brand:"Dell",serie:"D4MHHX1",inv:"109339"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU DELL VOSTRO 460 MINI TOWER",brand:"Dell",serie:"46QF1R1",inv:"103000"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU DELL VOSTRO 460 MINI TOWER",brand:"Dell",serie:"46RH1R1",inv:"102928"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9010 DESKTOP",brand:"Dell",serie:"D3YHHX1",inv:"109330"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU VOSTRO 460 MINI TOWER",brand:"Dell",serie:"ST8NGCGQ1",inv:"101351"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"OH5J5G74445OB3A5EL",inv:"97905"},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:4,cat:"Diadema/Audio",desc:"Diademas Xkim",brand:"Xkim",serie:"",inv:""},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:5,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  {doc:"DITI-4.6-54",date:"2024-09-25",qty:2,cat:"Teclado",desc:"Teclados DELL",brand:"Dell",serie:"CN0F2JV2LO3007AP08N9A03 / CN08NYJV7382665I05N2A02",inv:""},
+  // DITI-4.6-55 (2024-09-25) - gran lote teclados/CPUs
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU DELL VOSTRO 460 MINI TOWER",brand:"Dell",serie:"476J1R1",inv:"102920"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 7040 MINI TOWER",brand:"Dell",serie:"CMTG382",inv:"121568"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU VOSTRO MINI TOWER",brand:"Dell",serie:"GLB9XR1",inv:"103695"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Monitor",desc:"MONITOR DELL 23 P2314H",brand:"Dell",serie:"CN008MT56418059J29HLA01",inv:"121583"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Monitor",desc:"MONITOR DELL E177FP 17",brand:"Dell",serie:"OFJ181-64180-6AD-226L",inv:"79163"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Monitor",desc:'MONITOR DELL U2211H 21.5"',brand:"Dell",serie:"MX0NFJ8374446189996L",inv:"102957"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL KWE9CO",brand:"Dell",serie:"CN0Y527K7161617E0043",inv:"102964"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL KYBD 105",brand:"Dell",serie:"CN0Y527K7161617E00F8",inv:"102962"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL USB MULTIMEDIA ESPAÑOL",brand:"Dell",serie:"CN08NYJV7158156F01FD",inv:"121598"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL USB MULTIMEDIA ESPAÑOL",brand:"Dell",serie:"CN08NYJV7158156F01FE",inv:"121589"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL USB MULTIMEDIA ESPAÑOL",brand:"Dell",serie:"CN08NYJV7158156F00U5",inv:"121594"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9010 DESKTOP",brand:"Dell",serie:"D40JHX1",inv:"109317"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Monitor",desc:"MONITOR DELL P2214H",brand:"Dell",serie:"CN0KW14V7426159Q627L",inv:"121155"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL MULTIMEDIA PRO",brand:"Dell",serie:"CN-OU474D-44751-OORU-AOO",inv:"97909"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL USB KB SPANISH",brand:"Dell",serie:"CN0C639N7161634800L5",inv:"109591"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO HP Z820 WORKSTATION",brand:"HP",serie:"BDMGHOCHH7U3VW",inv:"119716"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO HP Z820 WORKSTATION",brand:"HP",serie:"BDMGHOCHH7NAKG",inv:"119725"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL KB212-B",brand:"Dell",serie:"5AT-0K8G",inv:"121207"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL KB212-B",brand:"Dell",serie:"5B3-1WQE",inv:"121212"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL KB212-B",brand:"Dell",serie:"CN0C639N7161644802XK",inv:"113689"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 7010 DESKTOP",brand:"Dell",serie:"85739Z1",inv:"110865"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL USB KB SPANISH",brand:"Dell",serie:"CN0C639N7161634H0EML",inv:"109647"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL USB KB SPANISH",brand:"Dell",serie:"CN0C639N71616348019C",inv:"109588"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL USB KB SPANISH",brand:"Dell",serie:"CN0C639N7161634506RX",inv:"109637"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL USB KB SPANISH",brand:"Dell",serie:"CN0C639N7161634801IA",inv:"109587"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL KB212-B",brand:"Dell",serie:"CN0C639N7161644802XG",inv:"113745"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL KB212-B QUIETKEY USB",brand:"Dell",serie:"CN0C639N7161655P1CDL",inv:"119676"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO COMPAQ CONECTOR USB",brand:"HP",serie:"PUAV1019003973",inv:"99739"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"Teclado",desc:"TECLADO DELL USB KB SPANISH",brand:"Dell",serie:"CN0C639N7161634801Y5",inv:"109629"},
+  {doc:"DITI-4.6-55",date:"2024-09-25",qty:1,cat:"CPU/Computador",desc:"COMPUTADOR IBM NETVISTA A20",brand:"IBM",serie:"23AAFX2",inv:"15983"},
+  // DITI-4.6-56 (2025-10-30)
+  {doc:"DITI-4.6-56",date:"2025-10-30",qty:10,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0C639N716164AD0MHNA00 (+9)",inv:"109556/115735"},
+  {doc:"DITI-4.6-56",date:"2025-10-30",qty:6,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  {doc:"DITI-4.6-56",date:"2025-10-30",qty:1,cat:"Diadema/Audio",desc:"Diadema Plantronics",brand:"Plantronics",serie:"2F1728",inv:""},
+  {doc:"DITI-4.6-56",date:"2025-10-30",qty:1,cat:"Otros",desc:"Disco Duro Externo",brand:"Genérico",serie:"",inv:"137148"},
+  {doc:"DITI-4.6-56",date:"2025-10-30",qty:1,cat:"CPU/Computador",desc:"CPU DELL AIO 7450",brand:"Dell",serie:"511Z0M2",inv:"127014"},
+  // DITI-4.6-57 (2025-10-31)
+  {doc:"DITI-4.6-57",date:"2025-10-31",qty:2,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV738267670721A02 / CN08NYJV7382665I05SUA02",inv:""},
+  {doc:"DITI-4.6-57",date:"2025-10-31",qty:1,cat:"CPU/Computador",desc:"CPU DELL AIO 7440",brand:"Dell",serie:"FJ8SFK2",inv:"124939"},
+  {doc:"DITI-4.6-57",date:"2025-10-31",qty:1,cat:"Diadema/Audio",desc:"Diadema Plantronics",brand:"Plantronics",serie:"2E2KY3",inv:""},
+  {doc:"DITI-4.6-57",date:"2025-10-31",qty:1,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  {doc:"DITI-4.6-57",date:"2025-10-31",qty:1,cat:"Tablet",desc:"IPAD AIR WIFI CELL 64GB",brand:"Apple",serie:"DLXMT0LWF4YG",inv:"116332"},
+  {doc:"DITI-4.6-57",date:"2025-10-31",qty:1,cat:"Tablet",desc:"IPAD MINI RETINA WI-FI 128GB",brand:"Apple",serie:"DLXM6159FH12",inv:"114119"},
+  // DITI-4.6-58 (2025-11-05)
+  {doc:"DITI-4.6-58",date:"2025-11-05",qty:2,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"10WZ29654619 / 10WZ29653248",inv:"99366/99575"},
+  {doc:"DITI-4.6-58",date:"2025-11-05",qty:2,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  {doc:"DITI-4.6-58",date:"2025-11-05",qty:1,cat:"Otros",desc:"IMPRESORA DE CODIGO DE BARRAS MO9825",brand:"Genérico",serie:"07102461",inv:"81834"},
+  {doc:"DITI-4.6-58",date:"2025-11-05",qty:1,cat:"Red/Networking",desc:"POWER INJECTOR CISCO AIRONET",brand:"Cisco",serie:"PHI141601CG",inv:"96790"},
+  // DITI-4.6-59 (2025-11-06)
+  {doc:"DITI-4.6-59",date:"2025-11-06",qty:2,cat:"CPU/Computador",desc:"CPU AIO OPTIPLEX 7440",brand:"Dell",serie:"GYFVFK2 / FJFVFK2",inv:"124661/124820"},
+  {doc:"DITI-4.6-59",date:"2025-11-06",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0FMXNR64180646049UA00",inv:""},
+  {doc:"DITI-4.6-59",date:"2025-11-06",qty:2,cat:"Diadema/Audio",desc:"Diadema Xkim",brand:"Xkim",serie:"",inv:""},
+  // DITI-4.6-60 (2025-11-14)
+  {doc:"DITI-4.6-60",date:"2025-11-14",qty:2,cat:"Monitor",desc:'Monitor DELL 22"',brand:"Dell",serie:"CN0KW14V7426145G70PL / CN0FMXNR641806460L8U",inv:"113680"},
+  {doc:"DITI-4.6-60",date:"2025-11-14",qty:1,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  {doc:"DITI-4.6-60",date:"2025-11-14",qty:1,cat:"Diadema/Audio",desc:"Diadema Xkim",brand:"Xkim",serie:"",inv:""},
+  // DITI-4.6-61 (2025-11-24)
+  {doc:"DITI-4.6-61",date:"2025-11-24",qty:2,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  {doc:"DITI-4.6-61",date:"2025-11-24",qty:1,cat:"Otros",desc:"Tarjeta Aceleradora de Video RED ROCKET",brand:"RED",serie:"",inv:"105732"},
+  {doc:"DITI-4.6-61",date:"2025-11-24",qty:1,cat:"Otros",desc:"FAX FAXPHONE L90 E IMPRESORA",brand:"Canon",serie:"",inv:"94714"},
+  {doc:"DITI-4.6-61",date:"2025-11-24",qty:3,cat:"Diadema/Audio",desc:"Diadema Xkim",brand:"Xkim",serie:"",inv:""},
+  {doc:"DITI-4.6-61",date:"2025-11-24",qty:1,cat:"Otros",desc:"Tarjeta Aceleradora PCIe HP Fusión ioFX 410GB",brand:"HP",serie:"",inv:""},
+  {doc:"DITI-4.6-61",date:"2025-11-24",qty:1,cat:"Diadema/Audio",desc:"Diadema EPOS SENNHEISER SC 60 USB ML",brand:"Sennheiser",serie:"A001290220205497",inv:""},
+  // DITI-4.6-63 (2025-11-25)
+  {doc:"DITI-4.6-63",date:"2025-11-25",qty:1,cat:"Monitor",desc:'Monitor Samsung 21,5"',brand:"Samsung",serie:"ZZ8NH4LF800590L",inv:"114627"},
+  {doc:"DITI-4.6-63",date:"2025-11-25",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0KH0NG7426164U1K3L",inv:""},
+  {doc:"DITI-4.6-63",date:"2025-11-25",qty:1,cat:"CPU/Computador",desc:"CPU DELL OPTIPLEX 7050 SFF",brand:"Dell",serie:"6TJTFK2",inv:"125105"},
+  {doc:"DITI-4.6-63",date:"2025-11-25",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV2LO30089P0QVVA03",inv:""},
+  {doc:"DITI-4.6-63",date:"2025-11-25",qty:2,cat:"Mouse",desc:"Mouse USB",brand:"Genérico",serie:"",inv:""},
+  {doc:"DITI-4.6-63",date:"2025-11-25",qty:1,cat:"Otros",desc:"MULTIMETRO DIGITAL UT-61C",brand:"UNI-T",serie:"1120810029",inv:"50475"},
+  // DITI-4.6-64 (2025-12-05)
+  {doc:"DITI-4.6-64",date:"2025-12-05",qty:2,cat:"Diadema/Audio",desc:"Diadema Xkim",brand:"Xkim",serie:"",inv:""},
+  {doc:"DITI-4.6-64",date:"2025-12-05",qty:1,cat:"Otros",desc:"Microscopio",brand:"Genérico",serie:"",inv:"41967"},
+  {doc:"DITI-4.6-64",date:"2025-12-05",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV27161674E0L5OA03",inv:""},
+  {doc:"DITI-4.6-64",date:"2025-12-05",qty:2,cat:"Teléfono",desc:"Teléfono Avaya",brand:"Avaya",serie:"11N510301478 / 10WZ32451347",inv:"99729/99450"},
+  {doc:"DITI-4.6-64",date:"2025-12-05",qty:5,cat:"Otros",desc:"Disco SDD 500GB",brand:"Genérico",serie:"2234E659CC6E (+4)",inv:""},
+  {doc:"DITI-4.6-64",date:"2025-12-05",qty:2,cat:"Mouse",desc:"Mouse Dell",brand:"Dell",serie:"",inv:""},
+  // DITI-8.6-01 (2025-01-16)
+  {doc:"DITI-8.6-01",date:"2025-01-16",qty:6,cat:"Teléfono",desc:"TELÉFONO IP GAMA MEDIA 1608",brand:"Avaya",serie:"10WZ25052647 (+5)",inv:"98975/98861/98704/99479/99523/98897"},
+  {doc:"DITI-8.6-01",date:"2025-01-16",qty:1,cat:"CPU/Computador",desc:"CPU OPTIPLEX 9010 DESKTOP",brand:"Dell",serie:"D52HHX1",inv:"109290"},
+  // DITI-8.6-03 (2025-01-20)
+  {doc:"DITI-8.6-03",date:"2025-01-20",qty:1,cat:"Teléfono",desc:"TELÉFONO IP GAMA MEDIA 1608",brand:"Avaya",serie:"10WZ31552655",inv:"99203"},
+  {doc:"DITI-8.6-03",date:"2025-01-20",qty:1,cat:"Teclado",desc:"Teclado Logitech EX100",brand:"Logitech",serie:"820-001810",inv:"41940"},
+  {doc:"DITI-8.6-03",date:"2025-01-20",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08VXG2567322541RGKA01",inv:""},
+  {doc:"DITI-8.6-03",date:"2025-01-20",qty:1,cat:"Teclado",desc:"Teclado Apple",brand:"Apple",serie:"F0T836500JAJ3LYA5",inv:""},
+  {doc:"DITI-8.6-03",date:"2025-01-20",qty:1,cat:"Mouse",desc:"lote de Mouse",brand:"Genérico",serie:"",inv:""},
+  // DITI-8.6-04 (2025-01-24)
+  {doc:"DITI-8.6-04",date:"2025-01-24",qty:1,cat:"Otros",desc:"MESA SALA 3 SÓTANO (DAÑADO)",brand:"Genérico",serie:"N/N",inv:"13943"},
+  // DITI-8.6-05 (2025-01-27)
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Diadema/Audio",desc:"DIADEMA SENNHEISER SH230",brand:"Sennheiser",serie:"136010507",inv:"122250"},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Diadema/Audio",desc:"DIADEMA SENNHEISER SH230",brand:"Sennheiser",serie:"136010510",inv:"122251"},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Diadema/Audio",desc:"DIADEMA PLANTRONICS HW251N",brand:"Plantronics",serie:"TA5654",inv:"106560"},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Diadema/Audio",desc:"DIADEMA PLANTRONICS HW251N",brand:"Plantronics",serie:"YF9889",inv:"106559"},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Diadema/Audio",desc:"DIADEMA SENNHEISER SH230",brand:"Sennheiser",serie:"136010940",inv:"122934"},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Diadema/Audio",desc:"DIADEMA SENNHEISER SH230",brand:"Sennheiser",serie:"136010781",inv:"122933"},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Red/Networking",desc:"ENRUTADOR CISCO SERIE 2811",brand:"Cisco",serie:"FHK1049F09V",inv:"86338"},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Red/Networking",desc:"ENRUTADOR CISCO SERIE 2811",brand:"Cisco",serie:"FTX1231A2ZW",inv:"86341"},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Red/Networking",desc:"CONCENTRADOR CISCO 24-10/100",brand:"Cisco",serie:"CHK0645V12R",inv:"641"},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Red/Networking",desc:"SWITCH CISCO CATALYST 2950T-24",brand:"Cisco",serie:"FAB0547UOCN",inv:"24668"},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Red/Networking",desc:"SWITCH CISCO WS C3550",brand:"Cisco",serie:"CAT0948N461",inv:""},
+  {doc:"DITI-8.6-05",date:"2025-01-27",qty:1,cat:"Red/Networking",desc:"SWITCH CISCO WS C3550",brand:"Cisco",serie:"CAT0948N44Y",inv:""},
+  // DITI-8.6-06 (2025-01-31)
+  {doc:"DITI-8.6-06",date:"2025-01-31",qty:1,cat:"Diadema/Audio",desc:"DIADEMA Logitech",brand:"Logitech",serie:"",inv:""},
+  {doc:"DITI-8.6-06",date:"2025-01-31",qty:1,cat:"Teclado",desc:"Teclado IBM",brand:"IBM",serie:"1S32P51200255915B",inv:"29496"},
+  {doc:"DITI-8.6-06",date:"2025-01-31",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV7382671B033IA02",inv:""},
+  {doc:"DITI-8.6-06",date:"2025-01-31",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN0F2JV2LO30089P0RB8A03",inv:""},
+  {doc:"DITI-8.6-06",date:"2025-01-31",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV73826767075AA02",inv:""},
+  {doc:"DITI-8.6-06",date:"2025-01-31",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN08NYJV738267670754A02",inv:""},
+  {doc:"DITI-8.6-06",date:"2025-01-31",qty:1,cat:"Red/Networking",desc:"EQUIPO SWITCH SERVER ULTRAVIEW PRO 1x4",brand:"Genérico",serie:"717517",inv:"33228"},
+  {doc:"DITI-8.6-06",date:"2025-01-31",qty:1,cat:"Teléfono",desc:"TELEFONO SIP YEALINK",brand:"Yealink",serie:"2119518051513110",inv:"128926"},
+  {doc:"DITI-8.6-06",date:"2025-01-31",qty:1,cat:"Red/Networking",desc:"SWITCH CISCO 2600S 24 PUERTOS",brand:"Cisco",serie:"JMX0643L78A",inv:"27669"},
+  // DITI-8.6-07 (2025-01-31)
+  {doc:"DITI-8.6-07",date:"2025-01-31",qty:8,cat:"Otros",desc:"SILLAS NOVAISO (DAÑADO)",brand:"Genérico",serie:"N/N",inv:"28668 (+7)"},
+  // DITI-8.6-08 (2025-01-31)
+  {doc:"DITI-8.6-08",date:"2025-01-31",qty:11,cat:"Otros",desc:"SILLAS NOVAISO (DAÑADO)",brand:"Genérico",serie:"N/N",inv:"36633 (+10)"},
+  // DITI-8.6-09 (2025-01-05)
+  {doc:"DITI-8.6-09",date:"2025-01-05",qty:1,cat:"Diadema/Audio",desc:"DIADEMA PreSonus",brand:"PreSonus",serie:"",inv:""},
+  {doc:"DITI-8.6-09",date:"2025-01-05",qty:1,cat:"Teclado",desc:"Teclado DELL",brand:"Dell",serie:"CN01GN56M6D0089E011KA01",inv:"29496"},
+  {doc:"DITI-8.6-09",date:"2025-01-05",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0668VCQDC0074N0U4B",inv:""},
+  {doc:"DITI-8.6-09",date:"2025-01-05",qty:1,cat:"Teléfono",desc:"TELÉFONO Avaya GAMA MEDIA 1608",brand:"Avaya",serie:"10WZ24554115",inv:""},
+  {doc:"DITI-8.6-09",date:"2025-01-05",qty:1,cat:"Otros",desc:"Cargador de portátil",brand:"Genérico",serie:"6919533462503",inv:""},
+  {doc:"DITI-8.6-09",date:"2025-01-05",qty:1,cat:"Tablet",desc:"TABLET GOOGLE NEXUS 9",brand:"Google",serie:"HT4CNJT00225",inv:"56572"},
+  {doc:"DITI-8.6-09",date:"2025-01-05",qty:1,cat:"Mouse",desc:"Mouse",brand:"Genérico",serie:"",inv:""},
+  // DITI-8.6-12 (2025-02-21)
+  {doc:"DITI-8.6-12",date:"2025-02-21",qty:5,cat:"Teclado",desc:"Teclado",brand:"Dell",serie:"CN0C639N7161634801Y9 (+4)",inv:"50196/50290/54424/53884/50177"},
+  {doc:"DITI-8.6-12",date:"2025-02-21",qty:1,cat:"Teclado",desc:"Teclado HP",brand:"HP",serie:"BDMGHOCHH7NBG8",inv:"119713"},
+  {doc:"DITI-8.6-12",date:"2025-02-21",qty:1,cat:"Teléfono",desc:"Teléfono Avaya pantalla",brand:"Avaya",serie:"19WZ042005MC",inv:"132555"},
+  {doc:"DITI-8.6-12",date:"2025-02-21",qty:6,cat:"Teléfono",desc:"teléfono avaya",brand:"Avaya",serie:"",inv:"98922/98745/99356/99261/98809/99031"},
+  {doc:"DITI-8.6-12",date:"2025-02-21",qty:2,cat:"Otros",desc:"Módulo de cómputo Digiturno",brand:"Genérico",serie:"",inv:""},
+  {doc:"DITI-8.6-12",date:"2025-02-21",qty:13,cat:"Mouse",desc:"Mouse DELL",brand:"Dell",serie:"",inv:""},
+  {doc:"DITI-8.6-12",date:"2025-02-21",qty:1,cat:"Otros",desc:"Cámara Dlink DCS-2121",brand:"D-Link",serie:"PV9C19B001989",inv:"42476"},
+  {doc:"DITI-8.6-12",date:"2025-02-21",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0FMXNR64180646042U",inv:""},
+  {doc:"DITI-8.6-12",date:"2025-02-21",qty:1,cat:"Otros",desc:"Multitoma Magon",brand:"Magon",serie:"",inv:"13175"},
+  // DITI-4.6-13 (2025-02-25)
+  {doc:"DITI-4.6-13",date:"2025-02-25",qty:2,cat:"Teclado",desc:"Teclado",brand:"Dell",serie:"CN08NYJV7382671400NNA02 / CN0F2JV27161659Q0OPNA01",inv:""},
+  {doc:"DITI-4.6-13",date:"2025-02-25",qty:1,cat:"Monitor",desc:"Monitor DELL",brand:"Dell",serie:"CN0H9WTF641803880TJM",inv:"110896"},
+  {doc:"DITI-4.6-13",date:"2025-02-25",qty:1,cat:"Diadema/Audio",desc:"Diadema",brand:"Genérico",serie:"2101ALA02628",inv:""},
+  {doc:"DITI-4.6-13",date:"2025-02-25",qty:1,cat:"CPU/Computador",desc:"CPU DELL AIO OPTIPLEX 7450",brand:"Dell",serie:"F3BPGK2",inv:"125490"},
+  {doc:"DITI-4.6-13",date:"2025-02-25",qty:1,cat:"CPU/Computador",desc:"CPU DELL AIO OPTIPLEX 7440",brand:"Dell",serie:"GY7SFK2",inv:"124881"}
+];
+</script>
+
+<script>
+/* ============================================================
+   LÓGICA DEL DASHBOARD
+   ============================================================ */
+const MONTHS = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const PALETTE = ["#e2001a","#2563eb","#f59e0b","#10b981","#8b5cf6","#06b6d4","#ec4899","#64748b","#f97316","#14b8a6","#a855f7","#0ea5e9"];
+const CAT_COLORS = {
+  "CPU/Computador":"#e2001a","Monitor":"#2563eb","Teléfono":"#f59e0b","Teclado":"#10b981",
+  "Mouse":"#8b5cf6","Diadema/Audio":"#06b6d4","Tablet":"#ec4899","Portátil":"#f97316",
+  "Celular":"#14b8a6","Red/Networking":"#a855f7","Otros":"#64748b"
+};
+
+// Estado de filtros
+const state = { month:"", brand:"", doc:"", search:"", category:"" };
+
+// Helpers
+const monthKey = d => d.slice(0,7);                       // YYYY-MM
+const monthLabel = d => `${MONTHS[parseInt(d.slice(5,7))-1]} ${d.slice(0,4)}`;
+const uniqSort = arr => [...new Set(arr)].sort();
+
+// ---- Poblar selects / chips ----
+function populateControls(){
+  const months = uniqSort(RAW.map(r=>monthKey(r.date)));
+  const fMonth = document.getElementById("fMonth");
+  months.forEach(m=>{ const o=document.createElement("option"); o.value=m; o.textContent=monthLabel(m+"-01"); fMonth.appendChild(o); });
+
+  const brands = uniqSort(RAW.map(r=>r.brand));
+  const fBrand = document.getElementById("fBrand");
+  brands.forEach(b=>{ const o=document.createElement("option"); o.value=b; o.textContent=b; fBrand.appendChild(o); });
+
+  const docs = uniqSort(RAW.map(r=>r.doc));
+  const fDoc = document.getElementById("fDoc");
+  docs.forEach(d=>{ const o=document.createElement("option"); o.value=d; o.textContent=d; fDoc.appendChild(o); });
+
+  const cats = uniqSort(RAW.map(r=>r.cat));
+  const chips = document.getElementById("chips");
+  const allChip = chip("Todas las categorías","");
+  allChip.classList.add("active");
+  chips.appendChild(allChip);
+  cats.forEach(c=> chips.appendChild(chip(c,c)));
+}
+function chip(text,val){
+  const el=document.createElement("div");
+  el.className="chip"; el.textContent=text; el.dataset.val=val;
+  el.onclick=()=>{
+    state.category = (state.category===val)?"":val;
+    document.querySelectorAll("#chips .chip").forEach(c=>c.classList.remove("active"));
+    const active = state.category===""
+      ? document.querySelector('#chips .chip[data-val=""]')
+      : el;
+    active.classList.add("active");
+    render();
+  };
+  return el;
+}
+
+// ---- Filtro ----
+function getFiltered(){
+  const q = state.search.trim().toLowerCase();
+  return RAW.filter(r=>{
+    if(state.month && monthKey(r.date)!==state.month) return false;
+    if(state.brand && r.brand!==state.brand) return false;
+    if(state.doc && r.doc!==state.doc) return false;
+    if(state.category && r.cat!==state.category) return false;
+    if(q){
+      const blob = `${r.desc} ${r.serie} ${r.inv} ${r.brand} ${r.cat} ${r.doc}`.toLowerCase();
+      if(!blob.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+// ---- KPIs ----
+function renderKPIs(data){
+  const totalUnits = data.reduce((s,r)=>s+r.qty,0);
+  const totalLines = data.length;
+  const docs = new Set(data.map(r=>r.doc)).size;
+  const cats = new Set(data.map(r=>r.cat)).size;
+  // categoría con más unidades
+  const byCat = {};
+  data.forEach(r=> byCat[r.cat]=(byCat[r.cat]||0)+r.qty);
+  let topCat="—", topCatVal=0;
+  Object.entries(byCat).forEach(([k,v])=>{ if(v>topCatVal){topCat=k;topCatVal=v;} });
+  const topCatPct = totalUnits? Math.round(topCatVal/totalUnits*100):0;
+  // % computo (CPU+Portátil)
+  const compute = data.filter(r=>r.cat==="CPU/Computador"||r.cat==="Portátil").reduce((s,r)=>s+r.qty,0);
+  const computePct = totalUnits? Math.round(compute/totalUnits*100):0;
+  const avgPerDoc = docs? (totalUnits/docs).toFixed(1):"0";
+
+  const kpis=[
+    {label:"Unidades dadas de baja", value:totalUnits.toLocaleString("es-CO"), sub:`${totalLines} líneas de activo`},
+    {label:"Solicitudes (DITI)", value:docs, sub:`Promedio ${avgPerDoc} unidades/solicitud`},
+    {label:"Categorías de activo", value:cats, sub:`Categoría top: ${topCat}`},
+    {label:"Participación categoría top", value:topCatPct+"%", sub:`${topCat} · ${topCatVal} unidades`},
+    {label:"% Equipos de cómputo", value:computePct+"%", sub:`${compute} CPU + portátiles`},
+    {label:"Marcas / fabricantes", value:new Set(data.map(r=>r.brand)).size, sub:`de ${new Set(RAW.map(r=>r.brand)).size} totales`}
+  ];
+  document.getElementById("kpis").innerHTML = kpis.map(k=>`
+    <div class="kpi">
+      <div class="label">${k.label}</div>
+      <div class="value">${k.value}</div>
+      <div class="sub">${k.sub}</div>
+    </div>`).join("");
+}
+
+// ---- Charts ----
+let charts={};
+function cssVar(v){ return getComputedStyle(document.body).getPropertyValue(v).trim(); }
+function destroyCharts(){ Object.values(charts).forEach(c=>c&&c.destroy()); charts={}; }
+
+function renderCharts(data){
+  destroyCharts();
+  const text=cssVar("--text"), muted=cssVar("--muted"), grid=cssVar("--border");
+  Chart.defaults.color=muted; Chart.defaults.font.family="'Segoe UI',system-ui,sans-serif";
+
+  // 1) Por categoría (doughnut)
+  const byCat={}; data.forEach(r=> byCat[r.cat]=(byCat[r.cat]||0)+r.qty);
+  const catLabels=Object.keys(byCat).sort((a,b)=>byCat[b]-byCat[a]);
+  charts.cat=new Chart(document.getElementById("chartCat"),{
+    type:"doughnut",
+    data:{labels:catLabels,datasets:[{data:catLabels.map(c=>byCat[c]),
+      backgroundColor:catLabels.map(c=>CAT_COLORS[c]||"#999"),borderColor:cssVar("--panel"),borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:"58%",
+      plugins:{legend:{position:"right",labels:{boxWidth:12,padding:10}}}}
+  });
+
+  // 2) Por marca (bar horizontal, top 10)
+  const byBrand={}; data.forEach(r=> byBrand[r.brand]=(byBrand[r.brand]||0)+r.qty);
+  const brandSorted=Object.keys(byBrand).sort((a,b)=>byBrand[b]-byBrand[a]).slice(0,10);
+  charts.brand=new Chart(document.getElementById("chartBrand"),{
+    type:"bar",
+    data:{labels:brandSorted,datasets:[{label:"Unidades",data:brandSorted.map(b=>byBrand[b]),
+      backgroundColor:brandSorted.map((_,i)=>PALETTE[i%PALETTE.length]),borderRadius:6}]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:grid},ticks:{color:muted}},y:{grid:{display:false},ticks:{color:text}}}}
+  });
+
+  // 3) Tendencia mensual (line + bar combinados)
+  const byMonthUnits={}, byMonthDocs={};
+  data.forEach(r=>{ const k=monthKey(r.date); byMonthUnits[k]=(byMonthUnits[k]||0)+r.qty; });
+  const docMonthSet={};
+  data.forEach(r=>{ const k=monthKey(r.date); (docMonthSet[k]=docMonthSet[k]||new Set()).add(r.doc); });
+  const mKeys=uniqSort(Object.keys(byMonthUnits));
+  charts.trend=new Chart(document.getElementById("chartTrend"),{
+    data:{labels:mKeys.map(k=>monthLabel(k+"-01")),
+      datasets:[
+        {type:"bar",label:"Unidades",data:mKeys.map(k=>byMonthUnits[k]),backgroundColor:"#2563eb",borderRadius:6,order:2},
+        {type:"line",label:"Solicitudes (DITI)",data:mKeys.map(k=>docMonthSet[k].size),borderColor:"#e2001a",
+          backgroundColor:"#e2001a",tension:.35,yAxisID:"y1",order:1,pointRadius:4,borderWidth:3}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:"top"}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:muted}},
+        y:{beginAtZero:true,grid:{color:grid},ticks:{color:muted},title:{display:true,text:"Unidades",color:muted}},
+        y1:{beginAtZero:true,position:"right",grid:{drawOnChartArea:false},ticks:{color:muted},title:{display:true,text:"Solicitudes",color:muted}}
+      }}
+  });
+
+  // 4) Top descripciones
+  const byDesc={}; data.forEach(r=> byDesc[r.desc]=(byDesc[r.desc]||0)+r.qty);
+  const topDesc=Object.keys(byDesc).sort((a,b)=>byDesc[b]-byDesc[a]).slice(0,8);
+  charts.top=new Chart(document.getElementById("chartTop"),{
+    type:"bar",
+    data:{labels:topDesc.map(d=>d.length>34?d.slice(0,32)+"…":d),
+      datasets:[{label:"Unidades",data:topDesc.map(d=>byDesc[d]),
+        backgroundColor:"#10b981",borderRadius:6}]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:items=>topDesc[items[0].dataIndex]}}},
+      scales:{x:{grid:{color:grid},ticks:{color:muted}},y:{grid:{display:false},ticks:{color:text,font:{size:11}}}}}
+  });
+
+  // 5) Unidades por documento (top 12)
+  const byDoc={}; data.forEach(r=> byDoc[r.doc]=(byDoc[r.doc]||0)+r.qty);
+  const topDocs=Object.keys(byDoc).sort((a,b)=>byDoc[b]-byDoc[a]).slice(0,12);
+  charts.doc=new Chart(document.getElementById("chartDoc"),{
+    type:"bar",
+    data:{labels:topDocs,datasets:[{label:"Unidades",data:topDocs.map(d=>byDoc[d]),
+      backgroundColor:"#f59e0b",borderRadius:6}]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:grid},ticks:{color:muted}},y:{grid:{display:false},ticks:{color:text,font:{size:11}}}}}
+  });
+}
+
+// ---- Tabla ----
+function renderTable(data){
+  const tbody=document.getElementById("tbody");
+  document.getElementById("rowCount").textContent=data.length;
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="8" class="empty">No hay activos que coincidan con los filtros seleccionados.</td></tr>`; return; }
+  const sorted=[...data].sort((a,b)=>a.date.localeCompare(b.date)||a.doc.localeCompare(b.doc));
+  tbody.innerHTML=sorted.map(r=>`
+    <tr>
+      <td>${r.doc}</td>
+      <td>${monthLabel(r.date)==null?"":new Date(r.date).toLocaleDateString("es-CO")}</td>
+      <td style="text-align:center">${r.qty}</td>
+      <td><span class="badge" style="background:${CAT_COLORS[r.cat]||'#64748b'}">${r.cat}</span></td>
+      <td>${r.desc}</td>
+      <td>${r.brand}</td>
+      <td style="font-family:monospace;font-size:12px">${r.serie||"—"}</td>
+      <td>${r.inv||"—"}</td>
+    </tr>`).join("");
+}
+
+// ---- Render maestro ----
+function render(){
+  const data=getFiltered();
+  renderKPIs(data);
+  renderCharts(data);
+  renderTable(data);
+}
+
+// ---- Eventos ----
+document.getElementById("fMonth").onchange=e=>{state.month=e.target.value;render();};
+document.getElementById("fBrand").onchange=e=>{state.brand=e.target.value;render();};
+document.getElementById("fDoc").onchange=e=>{state.doc=e.target.value;render();};
+document.getElementById("fSearch").oninput=e=>{state.search=e.target.value;render();};
+document.getElementById("resetBtn").onclick=()=>{
+  state.month=state.brand=state.doc=state.search=state.category="";
+  document.getElementById("fMonth").value="";
+  document.getElementById("fBrand").value="";
+  document.getElementById("fDoc").value="";
+  document.getElementById("fSearch").value="";
+  document.querySelectorAll("#chips .chip").forEach(c=>c.classList.remove("active"));
+  document.querySelector('#chips .chip[data-val=""]').classList.add("active");
+  render();
+};
+
+// ---- Tema claro/oscuro ----
+const themeBtn=document.getElementById("themeBtn");
+function setTheme(t){
+  if(t==="dark"){ document.body.setAttribute("data-theme","dark"); themeBtn.innerHTML='☀️ <span>Modo claro</span>'; }
+  else{ document.body.removeAttribute("data-theme"); themeBtn.innerHTML='🌙 <span>Modo oscuro</span>'; }
+  if(Object.keys(charts).length) renderCharts(getFiltered());
+}
+themeBtn.onclick=()=> setTheme(document.body.getAttribute("data-theme")==="dark"?"light":"dark");
+
+// ---- Init ----
+populateControls();
+render();
+</script>
+</body>
+</html>
