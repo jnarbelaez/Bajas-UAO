@@ -1,34 +1,106 @@
-# Dashboard Ejecutivo · Bajas de Activos TI · UAO
+# Dashboard de Bajas de Activos de TI — Universidad Autónoma de Occidente
 
-Aplicación web **autocontenida en un único archivo HTML** (CSS y JavaScript embebidos, Chart.js vía CDN) que funciona como Dashboard Ejecutivo de las **solicitudes de baja de activos TI** (documentos DITI) de la Unidad de Servicio al Usuario de la Universidad Autónoma de Occidente.
+Proyecto integral de analítica: desde los datos crudos de **bajas de activos tecnológicos**
+(formato institucional DSU-3.1.3-FO15) hasta un **dashboard interactivo funcionando**, con pipeline
+ETL, KPIs, diseño visual y documentación completa. Período analizado: **2025–2026**.
 
-## 📄 Archivos
+> **Rol del proyecto:** analítica de datos para el responsable de la administración de activos
+> del área de Tecnología (TI). **Usuario final:** equipo de TI, Compras y Auditoría.
 
-- [`dashboard-bajas-uao.html`](dashboard-bajas-uao.html) — ábrelo directamente en cualquier navegador (doble clic). No requiere servidor ni instalación.
-- [`bajas.csv`](bajas.csv) — archivo de origen consolidado (datos mapeados al dashboard).
+---
 
-## 📊 Qué incluye
+## 🚀 Inicio rápido (setup)
 
-**KPIs principales (6 tarjetas):** unidades dadas de baja, solicitudes DITI, categorías de activo, participación de la categoría top, % de equipos de cómputo y marcas/fabricantes.
+**Requisitos:** solo un navegador web. Opcional: Python 3.8+ para regenerar datos/ejecutar el ETL.
 
-**Gráficos interactivos (Chart.js):**
-1. Distribución por categoría (dona)
-2. Participación por marca / fabricante (barras)
-3. Tendencia mensual de bajas — unidades vs. nº de solicitudes (línea + barra)
-4. Top 8 modelos / descripciones
-5. Unidades por documento (DITI)
+### Opción 1 — Ver el dashboard (sin instalar nada)
+Abre **`dashboard-bajas-uao.html`** con doble clic en cualquier navegador. Funciona de inmediato
+(los datos van embebidos como respaldo).
 
-**Filtros avanzados (tiempo real, sin recargar):** archivo de origen, mes, marca, documento DITI, buscador libre (descripción/serie/inventario) y chips por categoría, con botón de *Limpiar filtros*.
+### Opción 2 — Con servidor local (datos siempre al día)
+```bash
+git clone https://github.com/jnarbelaez/Bajas-UAO.git
+cd Bajas-UAO
+python3 -m http.server 8000
+# Abrir http://localhost:8000/dashboard-bajas-uao.html
+```
 
-**Diseño:** minimalista y responsivo, con **modo claro/oscuro** elegante y tipografía limpia.
+### Opción 3 — Regenerar datos y KPIs con el pipeline ETL
+```bash
+cd etl
+python3 run_pipeline.py        # Extract → Transform → Validate → Load
+# Genera data/processed/bajas_consolidado.csv y data/kpis/kpis.json
+```
 
-## 📈 Datos
+### Opción 4 — Construir el dashboard en Power BI
+Sigue `powerbi/ARMAR-PBIX-PASO-A-PASO.md` (tema, medidas DAX y guía de 8 fases).
 
-Mapeados directamente desde el CSV consolidado (`Archivo de Origen, Fecha, Consecutivo, Cantidad, Descripción del elemento, Serie No., No. inventario`):
+---
 
-- **935** líneas de activo
-- **1.338** unidades
-- **106** solicitudes (DITI)
-- **11** categorías · **41** marcas
-- **2** archivos de origen: `Bajas 2025.pdf` y `bajas 2026.pdf`
-- Periodo: enero 2025 – octubre 2026
+## 📂 Estructura del repositorio
+
+```
+.
+├── dashboard-bajas-uao.html      # ⭐ Dashboard interactivo (3 páginas, drilldowns, date range)
+├── README.md                     # este archivo
+├── data/
+│   ├── raw/                      # CSV de origen (bajas_2025, bajas_2026)
+│   ├── processed/                # tabla de hechos consolidada (para Power BI)
+│   ├── kpis/                     # KPIs calculados (JSON)
+│   └── bajas.json                # datos que consume el dashboard web
+├── etl/                          # E4 · Pipeline ETL (paquete modular + scheduler)
+├── powerbi/                      # E4/E6 · Tema, medidas DAX, guía .pbix y mockups
+├── diseno/                       # E5 · Wireframes, paleta y mockups de alta fidelidad
+├── entregables/                  # E1–E7 · Documentos de cada entregable
+├── reportes/                     # Análisis EDA en texto
+└── scripts/                      # Generadores y validadores reproducibles
+```
+
+---
+
+## 📦 Entregables del proyecto
+
+| # | Entregable | Ubicación | Formato |
+|---|-----------|-----------|---------|
+| 1 | Especificación de Requisitos | `entregables/Entregable1-*.docx` | Word |
+| 2 | Análisis Exploratorio de Datos | `entregables/Entregable2-EDA.*` | Notebook + Informe |
+| 3 | KPIs e Indicadores | `entregables/Entregable3-*.docx` | Word |
+| 4 | Pipeline ETL | `etl/` + `entregables/Entregable4-*.ipynb` | Python + Notebook |
+| 5 | Diseño de Visualizaciones | `diseno/` + `entregables/Entregable5-*.docx` | SVG + Word |
+| 6 | Dashboard Interactivo | `dashboard-bajas-uao.html` + `powerbi/` | Web + Power BI |
+| 7 | Documentación y Presentación | `entregables/Entregable7-*` | Word + PPTX + guion |
+
+---
+
+## 📊 Resultados clave (datos reales 2025–2026)
+
+- **1.322 unidades** dadas de baja en **924 registros** y **104 informes técnicos**.
+- Equilibrio interanual: 2025 = 651 u. · 2026 = 671 u. (**+3,1 %**).
+- Categorías líderes: **Mouse (20,7 %)**, Telefonía IP (18,8 %), Teclados (16,9 %).
+- Marcas: **Dell (33,7 %)**, Avaya (11,9 %).
+- Calidad de datos: **score 87,2/100**; oportunidad de mejora en trazabilidad
+  (**40,4 % sin inventario**, 22,3 % sin serie).
+
+---
+
+## 🔄 Mantenimiento
+
+1. Añade o reemplaza los CSV en `data/raw/`.
+2. Ejecuta `cd etl && python3 run_pipeline.py` (regenera la tabla de hechos y los KPIs).
+3. En el dashboard web pulsa recargar; en Power BI, **Actualizar**.
+
+El pipeline es idempotente y valida la integridad antes de escribir, por lo que re-ejecutar es seguro.
+
+---
+
+## 📄 Documentación
+
+- **Guía de usuario y documentación técnica:** `entregables/Entregable7-Documentacion.docx`
+- **Cómo armar el .pbix:** `powerbi/ARMAR-PBIX-PASO-A-PASO.md`
+- **Pipeline ETL:** `etl/README.md`
+- **Diseño visual:** `diseno/README.md`
+
+---
+
+*Universidad Autónoma de Occidente · Fuente: Informes Técnicos para Baja o Devolución de Activos
+(DSU-3.1.3-FO15).*
