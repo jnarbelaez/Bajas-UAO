@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="720" viewBox="0 0 1000 720" font-family="Segoe UI, system-ui, sans-serif">
+  <rect width="1000" height="720" fill="#ffffff"/>
+  <text x="40" y="44" font-size="24" font-weight="800" fill="#1b2330">Wireframe · Layout del Dashboard (baja fidelidad)</text>
+  <text x="40" y="66" font-size="12" fill="#6b7688">Grid de 12 columnas · estructura en 4 bandas · boceto de estructura, no de estilo</text>
+
+  <!-- marco general -->
+  <rect x="40" y="86" width="920" height="600" rx="10" fill="#fbfcfe" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+
+  <!-- Banda 1: Header -->
+  <rect x="56" y="100" width="888" height="56" rx="6" fill="#eef1f6" stroke="#cbd5e1"/>
+  <rect x="66" y="112" width="40" height="32" rx="6" fill="#e2001a" opacity="0.4"/>
+  <text x="116" y="132" font-size="12" fill="#6b7688">LOGO + Título del dashboard</text>
+  <rect x="790" y="112" width="70" height="32" rx="6" fill="#dfe4ec"/><text x="800" y="132" font-size="10" fill="#6b7688">Tema</text>
+  <rect x="868" y="112" width="68" height="32" rx="6" fill="#dfe4ec"/><text x="878" y="132" font-size="10" fill="#6b7688">Export</text>
+
+  <!-- Banda 2: Filtros -->
+  <rect x="56" y="166" width="888" height="48" rx="6" fill="#eef1f6" stroke="#cbd5e1"/>
+  <text x="66" y="194" font-size="10" fill="#93a0b5">FILTROS →</text>
+  <rect x="130" y="176" width="120" height="28" rx="5" fill="#dfe4ec"/><text x="142" y="194" font-size="10" fill="#6b7688">Año</text>
+  <rect x="262" y="176" width="140" height="28" rx="5" fill="#dfe4ec"/><text x="274" y="194" font-size="10" fill="#6b7688">Categoría</text>
+  <rect x="414" y="176" width="140" height="28" rx="5" fill="#dfe4ec"/><text x="426" y="194" font-size="10" fill="#6b7688">Marca</text>
+  <rect x="566" y="176" width="140" height="28" rx="5" fill="#dfe4ec"/><text x="578" y="194" font-size="10" fill="#6b7688">Mes / Documento</text>
+  <rect x="718" y="176" width="160" height="28" rx="5" fill="#dfe4ec"/><text x="730" y="194" font-size="10" fill="#6b7688">Buscar…</text>
+
+  <!-- Banda 3: KPIs (5 tarjetas) -->
+  <text x="56" y="238" font-size="10" fill="#93a0b5">KPIs PRIMARIOS (fila de tarjetas)</text>
+  <g>
+    <rect x="56" y="246" width="170" height="70" rx="6" fill="#eef1f6" stroke="#cbd5e1"/><text x="66" y="266" font-size="9" fill="#93a0b5">KPI-01</text><rect x="66" y="274" width="80" height="20" fill="#dfe4ec"/>
+    <rect x="236" y="246" width="170" height="70" rx="6" fill="#eef1f6" stroke="#cbd5e1"/><text x="246" y="266" font-size="9" fill="#93a0b5">KPI-02</text><rect x="246" y="274" width="60" height="20" fill="#dfe4ec"/>
+    <rect x="416" y="246" width="170" height="70" rx="6" fill="#eef1f6" stroke="#cbd5e1"/><text x="426" y="266" font-size="9" fill="#93a0b5">KPI-09</text><rect x="426" y="274" width="70" height="20" fill="#dfe4ec"/>
+    <rect x="596" y="246" width="170" height="70" rx="6" fill="#eef1f6" stroke="#cbd5e1"/><text x="606" y="266" font-size="9" fill="#93a0b5">KPI-05</text><rect x="606" y="274" width="70" height="20" fill="#dfe4ec"/>
+    <rect x="776" y="246" width="168" height="70" rx="6" fill="#eef1f6" stroke="#cbd5e1"/><text x="786" y="266" font-size="9" fill="#93a0b5">KPI-13</text><rect x="786" y="274" width="70" height="20" fill="#dfe4ec"/>
+  </g>
+
+  <!-- Banda 4: Gráficos (grid) -->
+  <text x="56" y="342" font-size="10" fill="#93a0b5">ÁREA DE VISUALES (grid 12 columnas)</text>
+  <!-- fila A: barras (6col) + dona (6col) -->
+  <rect x="56" y="350" width="434" height="150" rx="6" fill="#eef1f6" stroke="#cbd5e1"/>
+  <text x="66" y="368" font-size="10" fill="#6b7688">KPI-04 · Barras categoría</text>
+  <rect x="76" y="378" width="200" height="12" fill="#dfe4ec"/><rect x="76" y="396" width="160" height="12" fill="#dfe4ec"/><rect x="76" y="414" width="120" height="12" fill="#dfe4ec"/><rect x="76" y="432" width="90" height="12" fill="#dfe4ec"/>
+  <rect x="510" y="350" width="434" height="150" rx="6" fill="#eef1f6" stroke="#cbd5e1"/>
+  <text x="520" y="368" font-size="10" fill="#6b7688">KPI-03/07 · Dona + Treemap marca</text>
+  <circle cx="620" cy="430" r="45" fill="none" stroke="#cbd5e1" stroke-width="18"/>
+  <rect x="720" y="390" width="200" height="80" fill="#dfe4ec"/>
+  <!-- fila B: línea ancho completo -->
+  <rect x="56" y="512" width="888" height="150" rx="6" fill="#eef1f6" stroke="#cbd5e1"/>
+  <text x="66" y="530" font-size="10" fill="#6b7688">KPI-08/10/11 · Serie temporal (ancho completo)</text>
+  <polyline fill="none" stroke="#cbd5e1" stroke-width="3" points="80,620 180,580 280,600 380,540 480,560 580,520 680,590 780,550 900,560"/>
+
+  <text x="40" y="708" font-size="11" fill="#93a0b5">Lectura en Z: los KPIs clave arriba-izquierda; el detalle temporal abajo. Visuales alineados al grid.</text>
+</svg>
