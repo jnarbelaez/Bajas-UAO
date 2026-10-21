@@ -1,0 +1,138 @@
+==========================================================================
+ MEDIDAS DAX — Dashboard Bajas de Activos TI (UAO)
+ Cómo usar: en Power BI Desktop, pestaña "Modelado" > "Nueva medida",
+ pega CADA bloque (desde el nombre hasta el RETURN/cierre) por separado.
+ Las líneas que empiezan con -- son comentarios; no las pegues.
+==========================================================================
+
+
+-- =====================================================================
+-- PASO 0 · TABLA CALENDARIO  (Modelado > Nueva tabla, pega todo el bloque)
+-- =====================================================================
+
+Calendario =
+ADDCOLUMNS (
+    CALENDAR ( DATE ( 2025, 1, 1 ), DATE ( 2026, 12, 31 ) ),
+    "Anio", YEAR ( [Date] ),
+    "NroMes", MONTH ( [Date] ),
+    "NombreMes", FORMAT ( [Date], "MMMM", "es-ES" ),
+    "AnioMes", FORMAT ( [Date], "YYYY-MM" ),
+    "Trimestre", "T" & FORMAT ( [Date], "Q" ),
+    "AnioTrimestre", FORMAT ( [Date], "YYYY" ) & "-T" & FORMAT ( [Date], "Q" )
+)
+
+-- Después de crearla:
+--  1) Modelo: relaciona Calendario[Date]  ->  bajas_consolidado[Fecha]
+--  2) Clic derecho en la tabla Calendario > "Marcar como tabla de fechas" (columna Date)
+--  3) Selecciona NombreMes > "Ordenar por columna" > NroMes
+
+
+-- =====================================================================
+-- KPIs BASE
+-- =====================================================================
+
+Total Unidades = SUM ( bajas_consolidado[Cantidad] )
+
+Total Registros = COUNTROWS ( bajas_consolidado )
+
+Total Informes = DISTINCTCOUNT ( bajas_consolidado[Consecutivo] )
+
+Unidades por Informe =
+DIVIDE ( [Total Unidades], [Total Informes] )
+
+
+-- =====================================================================
+-- COMPARACIÓN ENTRE AÑOS (2025 vs 2026)
+-- =====================================================================
+
+Unidades 2025 =
+CALCULATE ( [Total Unidades], bajas_consolidado[Anio] = 2025 )
+
+Unidades 2026 =
+CALCULATE ( [Total Unidades], bajas_consolidado[Anio] = 2026 )
+
+Variacion Abs 25 vs 26 = [Unidades 2026] - [Unidades 2025]
+
+Variacion % 25 vs 26 =
+VAR a = [Unidades 2025]
+VAR b = [Unidades 2026]
+RETURN DIVIDE ( b - a, a )
+
+
+-- =====================================================================
+-- INTELIGENCIA DE TIEMPO
+-- =====================================================================
+
+Unidades YTD =
+TOTALYTD ( [Total Unidades], Calendario[Date] )
+
+Unidades Mes Anterior =
+CALCULATE ( [Total Unidades], DATEADD ( Calendario[Date], -1, MONTH ) )
+
+Variacion % Mensual =
+DIVIDE ( [Total Unidades] - [Unidades Mes Anterior], [Unidades Mes Anterior] )
+
+
+-- =====================================================================
+-- CALIDAD DE DATOS / TRAZABILIDAD
+-- =====================================================================
+
+Registros Sin Serial =
+CALCULATE ( [Total Registros], bajas_consolidado[TieneSerial] = "No" )
+
+% Sin Serial =
+DIVIDE (
+    CALCULATE ( [Total Registros], bajas_consolidado[TieneSerial] = "No" ),
+    [Total Registros]
+)
+
+Registros Sin Inventario =
+CALCULATE ( [Total Registros], bajas_consolidado[TieneInventario] = "No" )
+
+% Sin Inventario =
+DIVIDE (
+    CALCULATE ( [Total Registros], bajas_consolidado[TieneInventario] = "No" ),
+    [Total Registros]
+)
+
+% Con Serial = 1 - [% Sin Serial]
+
+Registros Lote =
+CALCULATE ( [Total Registros], bajas_consolidado[EsLote] = "Si" )
+
+
+-- =====================================================================
+-- MÉTRICAS DINÁMICAS (respetan los filtros activos)
+-- =====================================================================
+
+Categoria Top =
+CALCULATE (
+    FIRSTNONBLANK ( bajas_consolidado[Categoria], 1 ),
+    TOPN ( 1, VALUES ( bajas_consolidado[Categoria] ), [Total Unidades], DESC )
+)
+
+Unidades Categoria Top =
+MAXX ( VALUES ( bajas_consolidado[Categoria] ), [Total Unidades] )
+
+% Participacion Categoria Top =
+DIVIDE ( [Unidades Categoria Top], [Total Unidades] )
+
+Marca Top =
+CALCULATE (
+    FIRSTNONBLANK ( bajas_consolidado[Marca], 1 ),
+    TOPN ( 1, VALUES ( bajas_consolidado[Marca] ), [Total Unidades], DESC )
+)
+
+Total Marcas = DISTINCTCOUNT ( bajas_consolidado[Marca] )
+
+Total Categorias = DISTINCTCOUNT ( bajas_consolidado[Categoria] )
+
+
+-- =====================================================================
+-- FORMATO DE KPI DE VARIACIÓN CON FLECHA (medida de texto, opcional)
+-- =====================================================================
+
+Variacion Etiqueta =
+VAR v = [Variacion % 25 vs 26]
+VAR flecha = IF ( v >= 0, "▲", "▼" )
+RETURN flecha & " " & FORMAT ( ABS ( v ), "0.0%" ) & " vs 2025"
