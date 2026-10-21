@@ -1,0 +1,70 @@
+{
+  "name": "UAO - Bajas de Activos TI",
+  "dataColors": [
+    "#E2001A",
+    "#2563EB",
+    "#F59E0B",
+    "#10B981",
+    "#8B5CF6",
+    "#06B6D4",
+    "#EC4899",
+    "#64748B",
+    "#F97316",
+    "#14B8A6",
+    "#A855F7",
+    "#0EA5E9"
+  ],
+  "foreground": "#1B2330",
+  "foregroundNeutralSecondary": "#6B7688",
+  "background": "#FFFFFF",
+  "backgroundLight": "#F4F6FB",
+  "backgroundNeutral": "#FBFCFE",
+  "tableAccent": "#E2001A",
+  "maximum": "#E2001A",
+  "center": "#F59E0B",
+  "minimum": "#10B981",
+  "null": "#CBD5E1",
+  "textClasses": {
+    "title": {
+      "fontSize": 14,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#1B2330"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#6B7688"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#1B2330"
+    },
+    "callout": {
+      "fontSize": 30,
+      "fontFace": "Segoe UI Bold",
+      "color": "#1B2330"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }],
+        "border": [{ "show": true, "color": { "solid": { "color": "#E6EAF2" } }, "radius": 12 }],
+        "visualHeaderTooltip": [{ "text": "" }],
+        "title": [{ "fontColor": { "solid": { "color": "#1B2330" } }, "fontSize": 13, "fontFamily": "Segoe UI Semibold" }]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [{ "color": { "solid": { "color": "#E2001A" } }, "fontSize": 28, "fontFamily": "Segoe UI Bold" }],
+        "categoryLabels": [{ "color": { "solid": { "color": "#6B7688" } }, "fontSize": 11 }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "header": [{ "fontColor": { "solid": { "color": "#6B7688" } }, "fontSize": 11, "fontFamily": "Segoe UI Semibold" }]
+      }
+    }
+  }
+}
