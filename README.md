@@ -9,6 +9,23 @@ ETL, KPIs, diseño visual y documentación completa. Período analizado: **2025�
 
 ---
 
+## 🗂️ Índice visual de entregables
+
+![Índice de entregables](assets/indice-entregables.svg)
+
+| # | Entregable | Complejidad | Abrir |
+|---|-----------|:-----------:|-------|
+| 1 | Especificación de Requisitos | Básica | [📄 .docx](entregables/Entregable1-Especificacion-de-Requisitos.docx) |
+| 2 | Análisis Exploratorio de Datos | Media | [📓 Notebook](entregables/Entregable2-EDA.ipynb) · [📄 Informe](entregables/Entregable2-EDA-Informe.html) |
+| 3 | KPIs e Indicadores | Media | [📄 .docx](entregables/Entregable3-KPIs-e-Indicadores.docx) |
+| 4 | Pipeline ETL | Alta | [🐍 Paquete etl/](etl/) · [📓 Ejemplos](entregables/Entregable4-ETL-Ejemplos.ipynb) |
+| 5 | Diseño de Visualizaciones | Media | [🎨 diseno/](diseno/) · [📄 .docx](entregables/Entregable5-Diseno-de-Visualizaciones.docx) |
+| 6 | Dashboard Interactivo | Alta | [🖥️ Dashboard](dashboard-bajas-uao.html) · [⚙️ Power BI](powerbi/) |
+| 7 | Documentación y Presentación | Media | [📄 Doc](entregables/Entregable7-Documentacion.docx) · [📊 PPTX](entregables/Entregable7-Presentacion-Ejecutiva.pptx) · [🎬 Guion](entregables/Entregable7-Guion-Video-Tutorial.md) |
+| ★ | **Resultado final (6 criterios)** | — | [✓ RESULTADO-FINAL.md](RESULTADO-FINAL.md) |
+
+---
+
 ## 🚀 Inicio rápido (setup)
 
 **Requisitos:** solo un navegador web. Opcional: Python 3.8+ para regenerar datos/ejecutar el ETL.
