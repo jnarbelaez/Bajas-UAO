@@ -1,0 +1,42 @@
+# Workflow de GitHub Actions para ejecutar el pipeline ETL mensualmente.
+# Para activarlo: copiar este archivo a .github/workflows/etl-schedule.yml
+name: ETL Bajas de Activos TI
+
+on:
+  schedule:
+    # Día 1 de cada mes a las 06:00 UTC
+    - cron: "0 6 1 * *"
+  workflow_dispatch: {}   # permite ejecución manual desde la pestaña Actions
+
+jobs:
+  etl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Ejecutar pipeline ETL
+        working-directory: etl
+        run: python run_pipeline.py
+
+      - name: Publicar resultados como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: etl-salidas
+          path: |
+            data/processed/bajas_consolidado.csv
+            data/kpis/kpis.json
+            etl/logs/
+
+      - name: Commit de los datos actualizados (opcional)
+        run: |
+          git config user.name "etl-bot"
+          git config user.email "etl-bot@users.noreply.github.com"
+          git add data/processed/bajas_consolidado.csv data/kpis/kpis.json
+          git commit -m "ETL: actualización automática de datos y KPIs" || echo "Sin cambios que commitear"
+          git push || echo "Nada que publicar"

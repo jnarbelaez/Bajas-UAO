@@ -1,0 +1,2 @@
+# Carpeta de bitácoras del pipeline ETL. Los archivos .log se generan en cada ejecución
+# y se ignoran en git (ver .gitignore). Este archivo mantiene la carpeta versionada.

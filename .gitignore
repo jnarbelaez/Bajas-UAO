@@ -11,3 +11,8 @@ venv/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Logs del pipeline ETL (se regeneran en cada ejecución)
+etl/logs/*.log
+# Artefactos temporales de escritura atómica
+*.tmp
