@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" font-family="Segoe UI, system-ui, sans-serif">
+  <rect width="1200" height="760" fill="#f4f6fb"/>
+
+  <!-- Header -->
+  <rect x="24" y="20" width="52" height="52" rx="14" fill="#e2001a"/>
+  <text x="50" y="54" fill="#fff" font-size="20" font-weight="800" text-anchor="middle">UAO</text>
+  <text x="90" y="42" fill="#1b2330" font-size="20" font-weight="700">Detalle por Activo</text>
+  <text x="90" y="62" fill="#6b7688" font-size="13">Análisis operativo y búsqueda · Segmentaciones interactivas</text>
+
+  <!-- Slicers -->
+  <g>
+    <rect x="24" y="92" width="282" height="60" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <text x="40" y="114" fill="#6b7688" font-size="11" font-weight="700">AÑO</text>
+    <rect x="40" y="122" width="60" height="22" rx="6" fill="#e2001a"/><text x="70" y="137" fill="#fff" font-size="11" text-anchor="middle">2025</text>
+    <rect x="108" y="122" width="60" height="22" rx="6" fill="#f4f6fb" stroke="#e6eaf2"/><text x="138" y="137" fill="#1b2330" font-size="11" text-anchor="middle">2026</text>
+  </g>
+  <g>
+    <rect x="318" y="92" width="282" height="60" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <text x="334" y="114" fill="#6b7688" font-size="11" font-weight="700">CATEGORÍA</text>
+    <rect x="334" y="122" width="250" height="22" rx="6" fill="#f4f6fb" stroke="#e6eaf2"/><text x="344" y="137" fill="#6b7688" font-size="11">Todas ▾</text>
+  </g>
+  <g>
+    <rect x="612" y="92" width="282" height="60" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <text x="628" y="114" fill="#6b7688" font-size="11" font-weight="700">MARCA</text>
+    <rect x="628" y="122" width="250" height="22" rx="6" fill="#f4f6fb" stroke="#e6eaf2"/><text x="638" y="137" fill="#6b7688" font-size="11">Dell ▾</text>
+  </g>
+  <g>
+    <rect x="906" y="92" width="270" height="60" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <text x="922" y="114" fill="#6b7688" font-size="11" font-weight="700">ES LOTE</text>
+    <rect x="922" y="122" width="60" height="22" rx="6" fill="#f4f6fb" stroke="#e6eaf2"/><text x="952" y="137" fill="#1b2330" font-size="11" text-anchor="middle">Sí</text>
+    <rect x="990" y="122" width="60" height="22" rx="6" fill="#f4f6fb" stroke="#e6eaf2"/><text x="1020" y="137" fill="#1b2330" font-size="11" text-anchor="middle">No</text>
+  </g>
+
+  <!-- Matriz Categoría x Año -->
+  <rect x="24" y="168" width="570" height="300" rx="14" fill="#fff" stroke="#e6eaf2"/>
+  <text x="42" y="194" fill="#1b2330" font-size="14" font-weight="700">Matriz: Categoría ▸ Descripción × Año</text>
+  <line x1="42" y1="208" x2="576" y2="208" stroke="#e6eaf2"/>
+  <g font-size="12">
+    <text x="42" y="230" fill="#6b7688" font-weight="700">Categoría / Descripción</text>
+    <text x="420" y="230" fill="#6b7688" font-weight="700">2025</text>
+    <text x="490" y="230" fill="#6b7688" font-weight="700">2026</text>
+    <text x="548" y="230" fill="#6b7688" font-weight="700">Total</text>
+    <line x1="42" y1="240" x2="576" y2="240" stroke="#f0f2f7"/>
+    <text x="42" y="262" fill="#1b2330" font-weight="700">▾ Computador</text><text x="424" y="262" fill="#1b2330">69</text><text x="494" y="262" fill="#1b2330">78</text><text x="548" y="262" fill="#1b2330" font-weight="700">147</text>
+    <text x="58" y="284" fill="#6b7688">OPTIPLEX 7450 AIO</text><text x="424" y="284" fill="#1b2330">22</text><text x="494" y="284" fill="#1b2330">26</text><text x="548" y="284" fill="#1b2330">48</text>
+    <text x="58" y="306" fill="#6b7688">OPTIPLEX 7440 AIO</text><text x="424" y="306" fill="#1b2330">18</text><text x="494" y="306" fill="#1b2330">19</text><text x="548" y="306" fill="#1b2330">37</text>
+    <line x1="42" y1="318" x2="576" y2="318" stroke="#f0f2f7"/>
+    <text x="42" y="340" fill="#1b2330" font-weight="700">▾ Teléfono</text><text x="424" y="340" fill="#1b2330">129</text><text x="494" y="340" fill="#1b2330">120</text><text x="548" y="340" fill="#1b2330" font-weight="700">249</text>
+    <text x="58" y="362" fill="#6b7688">Teléfono Avaya</text><text x="424" y="362" fill="#1b2330">96</text><text x="494" y="362" fill="#1b2330">88</text><text x="548" y="362" fill="#1b2330">184</text>
+    <line x1="42" y1="374" x2="576" y2="374" stroke="#f0f2f7"/>
+    <text x="42" y="396" fill="#1b2330" font-weight="700">▾ Teclado</text><text x="424" y="396" fill="#1b2330">104</text><text x="494" y="396" fill="#1b2330">119</text><text x="548" y="396" fill="#1b2330" font-weight="700">223</text>
+    <line x1="42" y1="430" x2="576" y2="430" stroke="#e6eaf2"/>
+    <text x="42" y="452" fill="#1b2330" font-weight="800">Total general</text><text x="424" y="452" fill="#1b2330" font-weight="800">651</text><text x="494" y="452" fill="#1b2330" font-weight="800">671</text><text x="548" y="452" fill="#e2001a" font-weight="800">1.322</text>
+  </g>
+
+  <!-- Línea: tendencia mensual continua -->
+  <rect x="610" y="168" width="566" height="300" rx="14" fill="#fff" stroke="#e6eaf2"/>
+  <text x="628" y="194" fill="#1b2330" font-size="14" font-weight="700">Tendencia mensual (AñoMes)</text>
+  <line x1="640" y1="440" x2="1150" y2="440" stroke="#e6eaf2"/>
+  <line x1="640" y1="220" x2="640" y2="440" stroke="#e6eaf2"/>
+  <polyline fill="none" stroke="#e2001a" stroke-width="3"
+    points="650,400 690,350 730,360 770,300 810,330 850,290 890,250 930,340 970,300 1010,370 1050,360 1090,320 1130,310"/>
+  <g fill="#e2001a">
+    <circle cx="650" cy="400" r="4"/><circle cx="690" cy="350" r="4"/><circle cx="730" cy="360" r="4"/>
+    <circle cx="770" cy="300" r="4"/><circle cx="810" cy="330" r="4"/><circle cx="850" cy="290" r="4"/>
+    <circle cx="890" cy="250" r="4"/><circle cx="930" cy="340" r="4"/><circle cx="970" cy="300" r="4"/>
+    <circle cx="1010" cy="370" r="4"/><circle cx="1050" cy="360" r="4"/><circle cx="1090" cy="320" r="4"/><circle cx="1130" cy="310" r="4"/>
+  </g>
+  <text x="628" y="462" fill="#6b7688" font-size="11">Pico: jul-2025 (161 u.) y abr-2026 (135 u.)</text>
+
+  <!-- Tabla de detalle -->
+  <rect x="24" y="484" width="1152" height="252" rx="14" fill="#fff" stroke="#e6eaf2"/>
+  <text x="42" y="510" fill="#1b2330" font-size="14" font-weight="700">Detalle de activos</text>
+  <g font-size="11">
+    <text x="42" y="536" fill="#6b7688" font-weight="700">Fecha</text>
+    <text x="150" y="536" fill="#6b7688" font-weight="700">Consecutivo</text>
+    <text x="290" y="536" fill="#6b7688" font-weight="700">Descripción</text>
+    <text x="640" y="536" fill="#6b7688" font-weight="700">Marca</text>
+    <text x="760" y="536" fill="#6b7688" font-weight="700">Serie No.</text>
+    <text x="1010" y="536" fill="#6b7688" font-weight="700">N° Inventario</text>
+    <line x1="42" y1="546" x2="1158" y2="546" stroke="#e6eaf2"/>
+    <g fill="#1b2330">
+      <text x="42" y="570">16/01/2025</text><text x="150" y="570">DITI-8.6-01</text><text x="290" y="570">CPU OPTIPLEX 9010 DESKTOP</text><text x="640" y="570">Dell</text><text x="760" y="570" font-family="monospace">D52HHX1</text><text x="1010" y="570">109290</text>
+      <text x="42" y="596">24/04/2025</text><text x="150" y="596">DITI-4.6-25</text><text x="290" y="596">COMPUTADOR OPTIPLEX 7440 AIO</text><text x="640" y="596">Dell</text><text x="760" y="596" font-family="monospace">FJ2XFK2</text><text x="1010" y="596">124755</text>
+      <text x="42" y="622">30/05/2025</text><text x="150" y="622">DITI-4.6-33</text><text x="290" y="622">COMPUTADOR MAC PRO 27" Cilindro</text><text x="640" y="622">Apple</text><text x="760" y="622" font-family="monospace">F5KMV1U8F9VM</text><text x="1010" y="622">116180</text>
+      <text x="42" y="648">15/07/2025</text><text x="150" y="648">DITI-4.6-40</text><text x="290" y="648">CPU IMAC RETINA 27" 5K</text><text x="640" y="648">Apple</text><text x="760" y="648" font-family="monospace">SC02W50J2J1GJ</text><text x="1010" y="648">129950</text>
+      <text x="42" y="674">26/01/2026</text><text x="150" y="674">DITI-4.4-03</text><text x="290" y="674">Computador Imac 27"</text><text x="640" y="674">Apple</text><text x="760" y="674" font-family="monospace">C02NR03RFY11</text><text x="1010" y="674">118095</text>
+      <text x="42" y="700">17/09/2026</text><text x="150" y="700">DITI-4.4-61</text><text x="290" y="700">LATITUDE 3450 ULTRA 7 155U</text><text x="640" y="700">Dell</text><text x="760" y="700" font-family="monospace">3T27P34</text><text x="1010" y="700">138063</text>
+    </g>
+  </g>
+  <text x="24" y="752" fill="#93a0b5" font-size="11">Mockup ilustrativo · Los slicers filtran todos los visuales de la página (resaltado cruzado)</text>
+</svg>

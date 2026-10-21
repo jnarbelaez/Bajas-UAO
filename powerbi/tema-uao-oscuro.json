@@ -1,0 +1,75 @@
+{
+  "name": "UAO - Bajas de Activos TI (Oscuro)",
+  "dataColors": [
+    "#FF3B5C",
+    "#3B82F6",
+    "#FBBF24",
+    "#34D399",
+    "#A78BFA",
+    "#22D3EE",
+    "#F472B6",
+    "#94A3B8",
+    "#FB923C",
+    "#2DD4BF",
+    "#C084FC",
+    "#38BDF8"
+  ],
+  "foreground": "#E9EEF7",
+  "foregroundNeutralSecondary": "#93A0B5",
+  "background": "#151D2B",
+  "backgroundLight": "#1A2335",
+  "backgroundNeutral": "#0E1420",
+  "tableAccent": "#FF3B5C",
+  "maximum": "#FF3B5C",
+  "center": "#FBBF24",
+  "minimum": "#34D399",
+  "null": "#475569",
+  "textClasses": {
+    "title": {
+      "fontSize": 14,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#E9EEF7"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#93A0B5"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#E9EEF7"
+    },
+    "callout": {
+      "fontSize": 30,
+      "fontFace": "Segoe UI Bold",
+      "color": "#E9EEF7"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#151D2B" } }, "transparency": 0 }],
+        "border": [{ "show": true, "color": { "solid": { "color": "#263347" } }, "radius": 12 }],
+        "visualHeaderTooltip": [{ "text": "" }],
+        "title": [{ "fontColor": { "solid": { "color": "#E9EEF7" } }, "fontSize": 13, "fontFamily": "Segoe UI Semibold" }]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [{ "color": { "solid": { "color": "#FF3B5C" } }, "fontSize": 28, "fontFamily": "Segoe UI Bold" }],
+        "categoryLabels": [{ "color": { "solid": { "color": "#93A0B5" } }, "fontSize": 11 }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "header": [{ "fontColor": { "solid": { "color": "#93A0B5" } }, "fontSize": 11, "fontFamily": "Segoe UI Semibold" }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#0E1420" } }, "transparency": 0 }]
+      }
+    }
+  }
+}
