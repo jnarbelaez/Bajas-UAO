@@ -1,12 +1,12 @@
-# Mejoras del Dashboard — versión 2
+# Mejoras del Dashboard
 
-Documento de la revisión y mejora del `dashboard-bajas-uao.html` existente.
-El original **se conserva intacto**; la versión mejorada es **`dashboard-bajas-uao-v2.html`**.
+Documento de la revisión y mejora aplicada a **`dashboard-bajas-uao.html`**.
+La versión mejorada **reemplaza** a la original (el contenido anterior queda en el historial de git).
 
 ## Cómo abrirlo
-- **Doble clic** en `dashboard-bajas-uao-v2.html` → funciona de inmediato (datos embebidos como respaldo).
+- **Doble clic** en `dashboard-bajas-uao.html` → funciona de inmediato (datos embebidos como respaldo).
 - **Con servidor** (recomendado para datos siempre al día): `python3 -m http.server` y abrir
-  `http://localhost:8000/dashboard-bajas-uao-v2.html` (carga `data/bajas.json`).
+  `http://localhost:8000/dashboard-bajas-uao.html` (carga `data/bajas.json`).
 
 ---
 
@@ -38,12 +38,12 @@ Aplicadas por `scripts/extraer_y_corregir.py` y materializadas en `data/bajas.js
 - **Datos desacoplados del HTML**: ahora viven en `data/bajas.json` (editable y reutilizable), con
   respaldo embebido para uso sin servidor.
 
-## 4. Archivos añadidos
+## 4. Archivos
 
 ```
-data/bajas.json                  ← datos corregidos (consumidos por v2)
-dashboard-bajas-uao-v2.html      ← dashboard mejorado
-scripts/extraer_y_corregir.py    ← extrae RAW del v1 y corrige datos
+dashboard-bajas-uao.html         ← dashboard mejorado (reemplaza al original)
+data/bajas.json                  ← datos corregidos (consumidos por el dashboard)
+scripts/extraer_y_corregir.py    ← extrae RAW del original y corrige datos
 scripts/validar_logica.mjs       ← pruebas de agregación (Node)
 ```
 
