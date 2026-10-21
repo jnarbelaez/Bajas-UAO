@@ -1,0 +1,69 @@
+==============================================================================
+  ANALISIS EXPLORATORIO DE DATOS (EDA) - BAJAS DE ACTIVOS DE TI
+  Consolidado 2025 + 2026  |  Fuente: Informes Tecnicos DSU-3.1.3-FO15
+==============================================================================
+
+>> KPIs PRINCIPALES
+   - Registros (lineas de detalle) : 924
+   - Unidades dadas de baja (suma Cantidad) : 1,322
+   - Informes tecnicos (consecutivos unicos) : 104
+   - Promedio de unidades por informe : 12.7
+
+>> DISTRIBUCION POR ANIO (unidades)
+   - 2025: 651 unidades  (473 registros)
+   - 2026: 671 unidades  (451 registros)
+
+>> TOP 10 CATEGORIAS DE ACTIVO (por unidades)
+   - Mouse                                         274 u.  (20.7%)
+   - Telefonia IP/Fija                             249 u.  (18.8%)
+   - Teclados                                      223 u.  (16.9%)
+   - Computadores de escritorio                    147 u.  (11.1%)
+   - Diademas/Audio                                136 u.  (10.3%)
+   - Monitores/Pantallas                            66 u.  (5.0%)
+   - Accesorios/Insumos                             57 u.  (4.3%)
+   - Computadores portatiles                        54 u.  (4.1%)
+   - Mobiliario                                     20 u.  (1.5%)
+   - Tabletas                                       18 u.  (1.4%)
+
+>> TOP 10 MARCAS (por unidades)
+   - Sin marca/Generico           462 u.  (34.9%)
+   - Dell                         446 u.  (33.7%)
+   - Avaya                        157 u.  (11.9%)
+   - Apple                         78 u.  (5.9%)
+   - Xkim                          52 u.  (3.9%)
+   - Logitech                      28 u.  (2.1%)
+   - Plantronics                   22 u.  (1.7%)
+   - HP                            11 u.  (0.8%)
+   - Samsung                       10 u.  (0.8%)
+   - Sennheiser                     9 u.  (0.7%)
+
+>> MESES CON MAYOR VOLUMEN DE BAJAS (Top 8)
+   - 2025-07: 161 unidades
+   - 2026-04: 135 unidades
+   - 2026-02: 89 unidades
+   - 2025-05: 83 unidades
+   - 2025-09: 74 unidades
+   - 2026-06: 74 unidades
+   - 2026-09: 63 unidades
+   - 2025-01: 60 unidades
+
+>> CALIDAD DE LOS DATOS
+   - Registros sin numero de serie     : 206  (22.3%)
+   - Registros sin numero de inventario: 373  (40.4%)
+   - Registros tipo LOTE (cantidad > 1): 77  (8.3%)
+   - Fechas no reconocidas             : 0
+   - Seriales duplicados (posible doble baja / re-registro): 5
+       * 2,11952E+15  -> aparece 2 veces
+       * RV8J10W9JKA  -> aparece 2 veces
+       * 17332000376  -> aparece 2 veces
+       * CNOC639N7161637Q00HFA00  -> aparece 2 veces
+       * 4CJ000962  -> aparece 2 veces
+
+>> ARCHIVOS GENERADOS PARA POWER BI (carpeta data/processed)
+   - bajas_consolidado.csv      (TABLA DE HECHOS principal)
+   - resumen_por_categoria.csv
+   - resumen_por_anio.csv
+   - resumen_por_mes.csv
+   - resumen_por_marca.csv
+
+==============================================================================
