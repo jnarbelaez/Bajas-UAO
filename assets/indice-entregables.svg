@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620" font-family="Segoe UI, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e2001a"/><stop offset="1" stop-color="#ff3b5c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="620" fill="#f4f6fb"/>
+
+  <!-- Encabezado -->
+  <rect x="0" y="0" width="1000" height="96" fill="url(#brand)"/>
+  <rect x="36" y="24" width="48" height="48" rx="13" fill="#fff"/>
+  <text x="60" y="56" fill="#e2001a" font-size="17" font-weight="800" text-anchor="middle">UAO</text>
+  <text x="100" y="44" fill="#fff" font-size="22" font-weight="800">Dashboard de Bajas de Activos de TI</text>
+  <text x="100" y="70" fill="#ffe3e7" font-size="13">Proyecto integral de analítica · 7 entregables · 2025–2026</text>
+  <text x="820" y="40" fill="#fff" font-size="13" font-weight="700">1.322 unidades</text>
+  <text x="820" y="60" fill="#ffe3e7" font-size="11">924 reg · 104 informes</text>
+  <text x="820" y="78" fill="#ffe3e7" font-size="11">calidad 87,2/100</text>
+
+  <!-- Tarjetas de entregables (grid 4 x 2) -->
+  <!-- Fila 1 -->
+  <g>
+    <rect x="36" y="120" width="222" height="150" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <circle cx="66" cy="150" r="16" fill="#e2001a"/><text x="66" y="156" fill="#fff" font-size="15" font-weight="800" text-anchor="middle">1</text>
+    <text x="92" y="146" fill="#6b7688" font-size="10" font-weight="700">BÁSICA</text>
+    <text x="54" y="186" fill="#1b2330" font-size="14" font-weight="700">Especificación</text>
+    <text x="54" y="204" fill="#1b2330" font-size="14" font-weight="700">de Requisitos</text>
+    <text x="54" y="232" fill="#6b7688" font-size="11">7 preguntas de negocio</text>
+    <text x="54" y="252" fill="#2563eb" font-size="10" font-weight="700">📄 Word</text>
+  </g>
+  <g>
+    <rect x="270" y="120" width="222" height="150" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <circle cx="300" cy="150" r="16" fill="#2563eb"/><text x="300" y="156" fill="#fff" font-size="15" font-weight="800" text-anchor="middle">2</text>
+    <text x="326" y="146" fill="#6b7688" font-size="10" font-weight="700">MEDIA</text>
+    <text x="288" y="186" fill="#1b2330" font-size="14" font-weight="700">Análisis</text>
+    <text x="288" y="204" fill="#1b2330" font-size="14" font-weight="700">Exploratorio (EDA)</text>
+    <text x="288" y="232" fill="#6b7688" font-size="11">12 gráficos · score 87,2</text>
+    <text x="288" y="252" fill="#2563eb" font-size="10" font-weight="700">📓 Notebook + PDF</text>
+  </g>
+  <g>
+    <rect x="504" y="120" width="222" height="150" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <circle cx="534" cy="150" r="16" fill="#f59e0b"/><text x="534" y="156" fill="#fff" font-size="15" font-weight="800" text-anchor="middle">3</text>
+    <text x="560" y="146" fill="#6b7688" font-size="10" font-weight="700">MEDIA</text>
+    <text x="522" y="186" fill="#1b2330" font-size="14" font-weight="700">KPIs e</text>
+    <text x="522" y="204" fill="#1b2330" font-size="14" font-weight="700">Indicadores</text>
+    <text x="522" y="232" fill="#6b7688" font-size="11">14 KPIs · SQL+Python+DAX</text>
+    <text x="522" y="252" fill="#2563eb" font-size="10" font-weight="700">📄 Word</text>
+  </g>
+  <g>
+    <rect x="738" y="120" width="226" height="150" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <circle cx="768" cy="150" r="16" fill="#10b981"/><text x="768" y="156" fill="#fff" font-size="15" font-weight="800" text-anchor="middle">4</text>
+    <text x="794" y="146" fill="#e2001a" font-size="10" font-weight="700">ALTA</text>
+    <text x="756" y="186" fill="#1b2330" font-size="14" font-weight="700">Pipeline ETL</text>
+    <text x="756" y="214" fill="#6b7688" font-size="11">Extract · Transform</text>
+    <text x="756" y="230" fill="#6b7688" font-size="11">Validate · Load</text>
+    <text x="756" y="252" fill="#2563eb" font-size="10" font-weight="700">🐍 Python + Notebook</text>
+  </g>
+  <!-- Fila 2 -->
+  <g>
+    <rect x="36" y="286" width="222" height="150" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <circle cx="66" cy="316" r="16" fill="#8b5cf6"/><text x="66" y="322" fill="#fff" font-size="15" font-weight="800" text-anchor="middle">5</text>
+    <text x="92" y="312" fill="#6b7688" font-size="10" font-weight="700">MEDIA</text>
+    <text x="54" y="352" fill="#1b2330" font-size="14" font-weight="700">Diseño de</text>
+    <text x="54" y="370" fill="#1b2330" font-size="14" font-weight="700">Visualizaciones</text>
+    <text x="54" y="398" fill="#6b7688" font-size="11">wireframes · paleta · mockups</text>
+    <text x="54" y="418" fill="#2563eb" font-size="10" font-weight="700">🎨 SVG + Word</text>
+  </g>
+  <g>
+    <rect x="270" y="286" width="222" height="150" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <circle cx="300" cy="316" r="16" fill="#06b6d4"/><text x="300" y="322" fill="#fff" font-size="15" font-weight="800" text-anchor="middle">6</text>
+    <text x="326" y="312" fill="#e2001a" font-size="10" font-weight="700">ALTA</text>
+    <text x="288" y="352" fill="#1b2330" font-size="14" font-weight="700">Dashboard</text>
+    <text x="288" y="370" fill="#1b2330" font-size="14" font-weight="700">Interactivo</text>
+    <text x="288" y="398" fill="#6b7688" font-size="11">3 páginas · drilldowns</text>
+    <text x="288" y="418" fill="#2563eb" font-size="10" font-weight="700">🖥️ Web + Power BI</text>
+  </g>
+  <g>
+    <rect x="504" y="286" width="222" height="150" rx="14" fill="#fff" stroke="#e6eaf2"/>
+    <circle cx="534" cy="316" r="16" fill="#ec4899"/><text x="534" y="322" fill="#fff" font-size="15" font-weight="800" text-anchor="middle">7</text>
+    <text x="560" y="312" fill="#6b7688" font-size="10" font-weight="700">MEDIA</text>
+    <text x="522" y="352" fill="#1b2330" font-size="14" font-weight="700">Documentación</text>
+    <text x="522" y="370" fill="#1b2330" font-size="14" font-weight="700">y Presentación</text>
+    <text x="522" y="398" fill="#6b7688" font-size="11">13 slides · guion video</text>
+    <text x="522" y="418" fill="#2563eb" font-size="10" font-weight="700">📊 Word + PPTX</text>
+  </g>
+  <!-- Tarjeta resultado -->
+  <g>
+    <rect x="738" y="286" width="226" height="150" rx="14" fill="#1b2330"/>
+    <text x="756" y="322" fill="#fff" font-size="14" font-weight="800">✓ Resultado final</text>
+    <text x="756" y="348" fill="#aab4c4" font-size="11">Dashboard profesional</text>
+    <text x="756" y="366" fill="#aab4c4" font-size="11">que cumple los 6</text>
+    <text x="756" y="384" fill="#aab4c4" font-size="11">criterios clave.</text>
+    <text x="756" y="414" fill="#ff8095" font-size="10" font-weight="700">RESULTADO-FINAL.md</text>
+  </g>
+
+  <!-- Pie: flujo end-to-end -->
+  <rect x="36" y="458" width="928" height="120" rx="14" fill="#fff" stroke="#e6eaf2"/>
+  <text x="54" y="486" fill="#1b2330" font-size="13" font-weight="700">Flujo end-to-end del proyecto</text>
+  <g font-size="12" font-weight="700" text-anchor="middle">
+    <rect x="60" y="504" width="130" height="44" rx="10" fill="#f4f6fb" stroke="#e6eaf2"/><text x="125" y="531" fill="#1b2330">Datos CSV</text>
+    <text x="205" y="531" fill="#6b7688" font-size="16">→</text>
+    <rect x="224" y="504" width="130" height="44" rx="10" fill="#fde8ea" stroke="#f3c6cc"/><text x="289" y="531" fill="#e2001a">Pipeline ETL</text>
+    <text x="369" y="531" fill="#6b7688" font-size="16">→</text>
+    <rect x="388" y="504" width="130" height="44" rx="10" fill="#f4f6fb" stroke="#e6eaf2"/><text x="453" y="531" fill="#1b2330">KPIs + Modelo</text>
+    <text x="533" y="531" fill="#6b7688" font-size="16">→</text>
+    <rect x="552" y="504" width="150" height="44" rx="10" fill="#e8effe" stroke="#c6d8f9"/><text x="627" y="531" fill="#2563eb">Dashboard BI</text>
+    <text x="717" y="531" fill="#6b7688" font-size="16">→</text>
+    <rect x="736" y="504" width="160" height="44" rx="10" fill="#f4f6fb" stroke="#e6eaf2"/><text x="816" y="531" fill="#1b2330">Documentación</text>
+  </g>
+
+  <text x="500" y="600" fill="#93a0b5" font-size="11" text-anchor="middle">Universidad Autónoma de Occidente · Fuente: Informes Técnicos DSU-3.1.3-FO15 · github.com/jnarbelaez/Bajas-UAO</text>
+</svg>
