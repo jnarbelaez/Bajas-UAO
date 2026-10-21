@@ -7,6 +7,10 @@
 
 Al terminar tendrás: **BajasActivosTI-UAO.pbix** con 3 páginas interactivas.
 
+> 🎨 **Dos temas incluidos:** `tema-uao.json` (claro) y `tema-uao-oscuro.json` (oscuro).
+> 🖼️ **Mockups de referencia:** en la carpeta `mockups/` encontrarás cómo debería verse cada
+> página; están insertados en las fases 5, 6 y 7 de esta guía.
+
 ---
 
 ## Requisitos
@@ -19,8 +23,10 @@ Al terminar tendrás: **BajasActivosTI-UAO.pbix** con 3 páginas interactivas.
 
 1. Abre **Power BI Desktop**.
 2. Menú **Archivo → Guardar como** → nómbralo `BajasActivosTI-UAO.pbix`. (Guardar temprano evita perder trabajo.)
-3. Aplica el tema corporativo: pestaña **Ver → Temas → Buscar temas…** → selecciona
-   `powerbi/tema-uao.json`. (Los visuales tomarán la paleta UAO automáticamente.)
+3. Aplica el tema corporativo: pestaña **Ver → Temas → Buscar temas…** → selecciona uno:
+   - `powerbi/tema-uao.json` → **tema claro** (recomendado para impresión/informes).
+   - `powerbi/tema-uao-oscuro.json` → **tema oscuro** (recomendado para pantalla/presentaciones).
+   Puedes cambiar entre ambos en cualquier momento sin rehacer visuales.
 
 ---
 
@@ -72,6 +78,10 @@ Al terminar tendrás: **BajasActivosTI-UAO.pbix** con 3 páginas interactivas.
 
 Renombra la pestaña inferior a **Resumen Ejecutivo** (doble clic en "Página 1").
 
+**Así debería verse esta página:**
+
+![Mockup Página 1 — Resumen Ejecutivo](mockups/pagina1-resumen-ejecutivo.svg)
+
 ### Fila de KPIs (arriba)
 Inserta 5 visuales **Tarjeta** (icono de tarjeta en *Visualizaciones*), uno por medida:
 `Total Unidades` · `Total Informes` · `Unidades por Informe` · `Unidades 2025` · `Unidades 2026`.
@@ -101,6 +111,10 @@ Inserta 5 visuales **Tarjeta** (icono de tarjeta en *Visualizaciones*), uno por 
 
 Nueva página (botón **+** abajo) → renómbrala **Detalle por Activo**.
 
+**Así debería verse esta página:**
+
+![Mockup Página 2 — Detalle por Activo](mockups/pagina2-detalle-por-activo.svg)
+
 ### Segmentaciones (slicers)
 Inserta 4 visuales **Segmentación de datos**, uno por campo:
 `Anio` · `Categoria` · `Marca` · `EsLote`. Colócalas en una franja superior o lateral.
@@ -124,6 +138,10 @@ Inserta 4 visuales **Segmentación de datos**, uno por campo:
 ## FASE 7 · PÁGINA 3 "Calidad de Datos" (4 min)
 
 Nueva página → **Calidad de Datos**.
+
+**Así debería verse esta página:**
+
+![Mockup Página 3 — Calidad de Datos](mockups/pagina3-calidad-datos.svg)
 
 - 2 **Tarjetas**: `% Sin Serial` y `% Sin Inventario` (Formato → categoría como porcentaje).
 - **Columnas apiladas**: Eje `Categoria`, Leyenda `TieneInventario`, Valores `Total Registros`.
