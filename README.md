@@ -53,8 +53,12 @@ Sigue `powerbi/ARMAR-PBIX-PASO-A-PASO.md` (tema, medidas DAX y guía de 8 fases)
 ├── diseno/                       # E5 · Wireframes, paleta y mockups de alta fidelidad
 ├── entregables/                  # E1–E7 · Documentos de cada entregable
 ├── reportes/                     # Análisis EDA en texto
-└── scripts/                      # Generadores y validadores reproducibles
+├── scripts/                      # Generadores y validadores reproducibles
+└── legacy/                       # Artefactos de iteraciones previas (histórico)
 ```
+
+> 📌 **¿Buscas una visión de cierre?** Lee **[`RESULTADO-FINAL.md`](RESULTADO-FINAL.md)**: demuestra,
+> con evidencia verificable, cómo el dashboard cumple los seis criterios de un dashboard profesional.
 
 ---
 
