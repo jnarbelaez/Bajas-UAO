@@ -24,6 +24,7 @@ from extract import extraer
 from transform import transformar, calcular_kpis
 from validate import validar
 from load import cargar
+from export_dashboard import exportar
 
 
 def main(dry_run=False):
@@ -56,6 +57,7 @@ def main(dry_run=False):
             destino = {"dry_run": True}
         else:
             destino = cargar(limpio, kpis, logger)
+            exportar(limpio, logger)
 
         dur = time.time() - t0
         logger.info("=" * 60)
