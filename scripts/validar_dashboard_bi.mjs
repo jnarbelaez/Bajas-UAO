@@ -20,7 +20,7 @@ function filtered(state){
 const errs=[];
 // 1. Sin filtros
 let d=filtered({});
-if(d.length!==935) errs.push("sin filtros != 935: "+d.length);
+if(d.length!==953) errs.push("sin filtros != 953: "+d.length);
 // 2. Date range (solo 2025-07)
 d=filtered({from:"2025-07",to:"2025-07"});
 const u=d.reduce((s,r)=>s+r.qty,0);

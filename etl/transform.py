@@ -19,7 +19,7 @@ from config import VALORES_NO_INFORMATIVOS, MESES_ES, FACT_COLUMNS
 def categorizar(desc):
     d = desc.lower()
     if re.search(r"tel[eé]fono|telefono|avaya|yealink|sip|vantage|celular|smartphone|alcatel|motorola|samsung galaxy|nokia|panasonic|gsm", d):
-        if re.search(r"celular|smartphone|galaxy|alcatel|motorola|nokia|gsm|moto e", d):
+        if re.search(r"celular|smartphone|galaxy|alcatel|motorola|nokia|gsm|moto [eg]\d|xiaomi|redmi|huawei", d):
             return "Telefonia movil"
         return "Telefonia IP/Fija"
     if re.search(r"diadema|headset|audifono|audífono", d):
@@ -67,7 +67,8 @@ def marca(desc):
         ("Lenovo", r"lenovo|thinkpad"), ("IBM", r"\bibm\b|netvista"),
         ("Xkim", r"xkim|kxim"), ("Genius", r"genius"), ("Wacom", r"wacom"),
         ("LG", r"\blg\b"), ("Transcend", r"transcend"), ("Startech", r"startech|satdock"),
-        ("Huawei", r"huawei"), ("Alcatel", r"alcatel"), ("Motorola", r"motorola|moto e"),
+        ("Huawei", r"huawei"), ("Alcatel", r"alcatel"), ("Motorola", r"motorola|moto [eg]\d"),
+        ("Xiaomi", r"xiaomi|redmi"),
         ("Nokia", r"nokia"), ("Panasonic", r"panasonic"), ("Epson", r"epson"),
         ("Google", r"google|nexus"), ("Compaq", r"compaq"), ("Koss", r"koss"),
         ("PreSonus", r"presonus"),

@@ -14,6 +14,7 @@ etl/
 ├── transform.py       # (2) Transform: limpieza, derivación y cálculo de KPIs
 ├── validate.py        # (3) Validación: 7 checks de integridad
 ├── load.py            # (4) Load: escritura atómica de CSV (Power BI) y KPIs (JSON)
+├── export_dashboard.py# (4) Load: genera data/bajas.json y actualiza el respaldo embebido del HTML
 ├── run_pipeline.py    # Orquestador: encadena las 4 fases + manejo de errores
 ├── logs/              # bitácoras de cada ejecución
 └── scheduler/         # (7) Automatización: cron, Windows, GitHub Actions
@@ -38,6 +39,7 @@ python3 run_pipeline.py --dry-run    # valida y calcula, sin escribir
 ### Salidas
 - `data/processed/bajas_consolidado.csv` — tabla de hechos para Power BI (UTF-8 + BOM).
 - `data/kpis/kpis.json` — los 14 KPIs del Entregable 3 calculados.
+- `data/bajas.json` y el respaldo embebido en `dashboard-bajas-uao.html` — lo que lee el dashboard web.
 - `etl/logs/etl_<timestamp>.log` — bitácora de la ejecución.
 
 ### Códigos de salida
