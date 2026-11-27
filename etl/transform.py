@@ -62,7 +62,7 @@ def marca(desc):
         ("Apple", r"apple|imac|macbook|mac pro|macpro|ipad|magsafe|thunderbolt|magic"),
         ("Avaya", r"avaya|vantage"), ("Yealink", r"yealink"),
         ("Cisco", r"cisco|aironet|catalyst"), ("HP", r"\bhp\b|hewlett|z820"),
-        ("Logitech", r"logitech"), ("Sennheiser", r"sennheiser|epos|sh230|sh30|\bsc ?60\b"),
+        ("Logitech", r"logitech"), ("Sennheiser", r"sennheiser|epos|sh230|sh30|\bsc ?60\b"), ("Padboard", r"padboard"),
         ("Plantronics", r"plantronics|hw251"), ("Samsung", r"samsung|galaxy"),
         ("Lenovo", r"lenovo|thinkpad"), ("IBM", r"\bibm\b|netvista"),
         ("Xkim", r"xkim|kxim"), ("Genius", r"genius"), ("Wacom", r"wacom"),
